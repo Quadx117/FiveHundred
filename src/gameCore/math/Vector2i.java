@@ -6,8 +6,8 @@ package gameCore.math;
  * @author Eric Perron (inspired by XNA Framework from Microsoft)
  * 
  */
-public class Vector2i {
-
+public class Vector2i
+{
 	// TODO : Do I keep those private static fields
 	private static final Vector2i zeroVector = new Vector2i(0, 0);
 	private static final Vector2i unitVector = new Vector2i(1, 1);
@@ -50,7 +50,8 @@ public class Vector2i {
 	 * Initializes a new instance of Vector2i with both of its component set to
 	 * 0.0f.
 	 */
-	public Vector2i() {
+	public Vector2i()
+	{
 		x = y = 0;
 	}
 
@@ -59,9 +60,10 @@ public class Vector2i {
 	 * the specified value.
 	 * 
 	 * @param value
-	 *            The value to initialize both components to.
+	 *        The value to initialize both components to.
 	 */
-	public Vector2i(int value) {
+	public Vector2i(int value)
+	{
 		this.x = value;
 		this.y = value;
 	}
@@ -71,11 +73,12 @@ public class Vector2i {
 	 * specified values.
 	 * 
 	 * @param x
-	 *            Initial value for the x-component of the vector.
+	 *        Initial value for the x-component of the vector.
 	 * @param y
-	 *            Initial value for the y-component of the vector.
+	 *        Initial value for the y-component of the vector.
 	 */
-	public Vector2i(int x, int y) {
+	public Vector2i(int x, int y)
+	{
 		this.x = x;
 		this.y = y;
 	}
@@ -85,80 +88,95 @@ public class Vector2i {
 	 * the same values as the specified vector.
 	 * 
 	 * @param vector
-	 *            The vector used to set the components of this vector.
+	 *        The vector used to set the components of this vector.
 	 */
-	public Vector2i(Vector2i vector) {
+	public Vector2i(Vector2i vector)
+	{
 		this.x = vector.getX();
 		this.y = vector.getY();
 	}
 
 	// TODO : Finish comments and add missing methods
-	public Vector2i add(Vector2i other) {
+	public Vector2i add(Vector2i other)
+	{
 		this.x += other.x;
 		this.y += other.y;
 		return this;
 	}
 
-	public Vector2i add(int value) {
+	public Vector2i add(int value)
+	{
 		this.x += value;
 		this.y += value;
 		return this;
 	}
 
-	public Vector2i subtract(Vector2i other) {
+	public Vector2i subtract(Vector2i other)
+	{
 		this.x -= other.x;
 		this.y -= other.y;
 		return this;
 	}
 
-	public Vector2i subtract(int value) {
+	public Vector2i subtract(int value)
+	{
 		this.x -= value;
 		this.y -= value;
 		return this;
 	}
 
-	public Vector2i multiply(Vector2i other) {
+	public Vector2i multiply(Vector2i other)
+	{
 		this.x *= other.x;
 		this.y *= other.y;
 		return this;
 	}
 
-	public Vector2i multiply(int value) {
+	public Vector2i multiply(int value)
+	{
 		this.x *= value;
 		this.y *= value;
 		return this;
 	}
 
-	public Vector2i divide(Vector2i other) throws IllegalArgumentException {
-		if (other.x == 0 || other.y == 0) throw new IllegalArgumentException("Cannot divide by zero");
+	public Vector2i divide(Vector2i other) throws IllegalArgumentException
+	{
+		if (other.x == 0 || other.y == 0)
+			throw new IllegalArgumentException("Cannot divide by zero");
 		this.x /= other.x;
 		this.y /= other.y;
 		return this;
 	}
 
-	public Vector2i divide(int value) throws IllegalArgumentException {
-		if (value == 0) throw new IllegalArgumentException("Cannot divide by zero");
+	public Vector2i divide(int value) throws IllegalArgumentException
+	{
+		if (value == 0)
+			throw new IllegalArgumentException("Cannot divide by zero");
 		this.x /= value;
 		this.y /= value;
 		return this;
 	}
 
-	public float length() {
+	public float length()
+	{
 		return (float) Math.sqrt(x * x + y * y);
 	}
 
-	public float dotProduct(Vector2i other) {
+	public float dotProduct(Vector2i other)
+	{
 		return x * other.getX() + y * other.getY();
 	}
 
-	public Vector2i normalize() {
+	public Vector2i normalize()
+	{
 		float length = length();
 		x /= length;
 		y /= length;
 		return this;
 	}
 
-	public Vector2i rotate(float angle) {
+	public Vector2i rotate(float angle)
+	{
 		double rad = Math.toRadians(angle);
 		double cos = Math.cos(rad);
 		double sin = Math.sin(rad);
@@ -166,28 +184,35 @@ public class Vector2i {
 		return new Vector2i((int) (x * cos - y * sin), (int) (x * sin + y * cos));
 	}
 
-	public boolean equals(Object object) {
-		if (!(object instanceof Vector2i)) return false;
+	public boolean equals(Object object)
+	{
+		if (!(object instanceof Vector2i))
+			return false;
 		Vector2i vec = (Vector2i) object;
-		if (vec.getX() == this.getX() && vec.getY() == this.getY()) return true;
+		if (vec.getX() == this.getX() && vec.getY() == this.getY())
+			return true;
 		return false;
 	}
 
 	// ++++++++++ Static methods ++++++++++ //
 
-	public static Vector2i add(Vector2i v0, Vector2i v1) {
+	public static Vector2i add(Vector2i v0, Vector2i v1)
+	{
 		return new Vector2i(v0.getX() + v1.getX(), v0.getY() + v1.getY());
 	}
 
-	public static Vector2i subtract(Vector2i v0, Vector2i v1) {
+	public static Vector2i subtract(Vector2i v0, Vector2i v1)
+	{
 		return new Vector2i(v0.getX() - v1.getX(), v0.getY() - v1.getY());
 	}
 
-	public static Vector2i multiply(Vector2i vector, float value) {
+	public static Vector2i multiply(Vector2i vector, float value)
+	{
 		return new Vector2i((int) (vector.getX() * value), (int) (vector.getY() * value));
 	}
 
-	public static Vector2i divide(Vector2i vector, float value) {
+	public static Vector2i divide(Vector2i vector, float value)
+	{
 		return new Vector2i((int) (vector.getX() / value), (int) (vector.getY() / value));
 	}
 
@@ -197,7 +222,8 @@ public class Vector2i {
 	 * 
 	 * @return
 	 */
-	public int getX() {
+	public int getX()
+	{
 		return x;
 	}
 
@@ -205,7 +231,8 @@ public class Vector2i {
 	 * 
 	 * @return
 	 */
-	public int getY() {
+	public int getY()
+	{
 		return y;
 	}
 
@@ -215,7 +242,8 @@ public class Vector2i {
 	 * 
 	 * @param x
 	 */
-	public void setX(int x) {
+	public void setX(int x)
+	{
 		this.x = x;
 	}
 
@@ -223,7 +251,8 @@ public class Vector2i {
 	 * 
 	 * @param y
 	 */
-	public void setY(int y) {
+	public void setY(int y)
+	{
 		this.y = y;
 	}
 
@@ -231,7 +260,8 @@ public class Vector2i {
 	 * 
 	 * @param vector2i
 	 */
-	public void set(Vector2i vector2i) {
+	public void set(Vector2i vector2i)
+	{
 		set(vector2i.x, vector2i.y);
 	}
 
@@ -240,7 +270,8 @@ public class Vector2i {
 	 * @param x
 	 * @param y
 	 */
-	public void set(int x, int y) {
+	public void set(int x, int y)
+	{
 		this.x = x;
 		this.y = y;
 	}
@@ -249,7 +280,8 @@ public class Vector2i {
 	 * 
 	 */
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "(" + x + ", " + y + ")";
 	}
 }

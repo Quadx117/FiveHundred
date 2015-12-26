@@ -2,8 +2,8 @@ package gameCore.components;
 
 import java.util.ArrayList;
 
-public class GameComponentCollection extends ArrayList<IGameComponent> {
-
+public class GameComponentCollection extends ArrayList<IGameComponent>
+{
 	/**
 	 * Default serial version UID
 	 */
@@ -31,8 +31,10 @@ public class GameComponentCollection extends ArrayList<IGameComponent> {
 	// cref="GameComponent"/> removed.
 	// </summary>
 	@Override
-	public void clear() {
-		for (int i = 0; i < super.size(); ++i) {
+	public void clear()
+	{
+		for (int i = 0; i < super.size(); ++i)
+		{
 			// TODO: Events
 			// this.OnComponentRemoved(new
 			// GameComponentCollectionEventArgs(base[i]));
@@ -41,12 +43,15 @@ public class GameComponentCollection extends ArrayList<IGameComponent> {
 	}
 
 	@Override
-	public void add(int index, IGameComponent item) throws IllegalArgumentException {
-		if (super.indexOf(item) != -1) {
+	public void add(int index, IGameComponent item) throws IllegalArgumentException
+	{
+		if (super.indexOf(item) != -1)
+		{
 			throw new IllegalArgumentException("Cannot Add Same Component Multiple Times");
 		}
 		super.add(index, item);
-		if (item != null) {
+		if (item != null)
+		{
 			// TODO: Events
 			// this.OnComponentAdded(new
 			// GameComponentCollectionEventArgs(item));
@@ -73,9 +78,11 @@ public class GameComponentCollection extends ArrayList<IGameComponent> {
 	 * }
 	 */
 	@Override
-	public IGameComponent remove(int index) {
+	public IGameComponent remove(int index)
+	{
 		IGameComponent gameComponent = super.remove(index);
-		if (gameComponent != null) {
+		if (gameComponent != null)
+		{
 			// TODO: Events
 			// this.onComponentRemoved(new
 			// GameComponentCollectionEventArgs(gameComponent));
@@ -84,7 +91,8 @@ public class GameComponentCollection extends ArrayList<IGameComponent> {
 	}
 
 	@Override
-	public IGameComponent set(int index, IGameComponent item) throws UnsupportedOperationException {
+	public IGameComponent set(int index, IGameComponent item) throws UnsupportedOperationException
+	{
 		throw new UnsupportedOperationException();
 	}
 }

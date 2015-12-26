@@ -33,10 +33,11 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 /** This class contains the main methods of our game */
-public class Game extends GameCore {
-
+public class Game extends GameCore
+{
 	/** The enumeration for the different game states. */
-	private enum GameState {
+	private enum GameState
+	{
 		DEALING_CARDS, BIDDING, PLAYING, SCORING
 	}
 
@@ -130,7 +131,8 @@ public class Game extends GameCore {
 	/** A FPS counter */
 	private FPS_Counter fpsCounter;
 
-	public Game() {
+	public Game()
+	{
 		super(800, 520, "Le 500");
 
 		gameFont = new Font("Verdana", Font.PLAIN, 16);
@@ -151,7 +153,7 @@ public class Game extends GameCore {
 		createMenuBar();
 		initBiddingComponents();
 		initNextRoundButton();
-		
+
 		fpsCounter = new FPS_Counter(this);
 
 		// Randomly select the first person to be the dealer
@@ -168,15 +170,9 @@ public class Game extends GameCore {
 	}
 
 	@Override
-	protected void initialize() {
+	protected void initialize()
+	{
 		super.initialize();
-
-		// Set the Look to the system's look instead of java's default look
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		currentGameState = GameState.DEALING_CARDS;
 
@@ -186,7 +182,8 @@ public class Game extends GameCore {
 		playersTextPosition[2].set(super.getScreenWidth() - 130, (super.getScreenHeight() - 376) / 2 - 25);
 	}
 
-	public void update(GameTime gameTime) {
+	public void update(GameTime gameTime)
+	{
 		// TODO : Detect single key presses
 		// Read the current state of the Keyboard and MouseButtons and store it
 		// currentKeyboardState.update();
@@ -197,7 +194,8 @@ public class Game extends GameCore {
 		// Update the human player since he has mouse and keyboard controls.
 		playersList.get(0).update(gameTime);
 
-		switch (currentGameState) {
+		switch (currentGameState)
+		{
 			case DEALING_CARDS:
 				bidCount = 0;
 				numCardsPlayed = 0;
@@ -224,7 +222,8 @@ public class Game extends GameCore {
 				break;
 			case SCORING:
 				// Wait for the table to be cleared
-				if (gameTable.getCardsOnTable().isEmpty()) {
+				if (gameTable.getCardsOnTable().isEmpty())
+				{
 					// Wait until player presses the button
 					nextRound.setVisible(true);
 				}
@@ -235,7 +234,8 @@ public class Game extends GameCore {
 
 	}
 
-	private void updateBidding() {
+	private void updateBidding()
+	{
 		Bid currentBid = null;
 		// Poll the current player to see if he called a bid and store it.
 		currentBid = playersList.get(currentPlayer).getBid();
@@ -244,9 +244,11 @@ public class Game extends GameCore {
 
 		// If a bid was called, increment the bid count and set the next player
 		// to be the current player, that is the one to play.
-		if (currentBid != null) {
+		if (currentBid != null)
+		{
 			++bidCount;
-			if (currentBid.ordinal() > highestBid.ordinal()) {
+			if (currentBid.ordinal() > highestBid.ordinal())
+			{
 				highestBid = currentBid;
 				highestBidder = currentPlayer;
 			}
@@ -256,7 +258,8 @@ public class Game extends GameCore {
 
 		// If all three player called their bid, adjust the cards values to the
 		// trump if needed and play.
-		if (bidCount == 3) {
+		if (bidCount == 3)
+		{
 			adjustCardValues();
 			currentPlayer = highestBidder;
 			currentGameState = GameState.PLAYING;
@@ -266,28 +269,35 @@ public class Game extends GameCore {
 	/**
 	 * Adjust each player's card values with the trump of the bid if needed.
 	 */
-	private void adjustCardValues() {
-		if (highestBid.hasTrump()) {
+	private void adjustCardValues()
+	{
+		if (highestBid.hasTrump())
+		{
 			// TODO : actual code to adjust card value.
 		}
 	}
 
-	private void playCards() {
-		if (numCardsPlayed == totalNumPlayableCards) {
+	private void playCards()
+	{
+		if (numCardsPlayed == totalNumPlayableCards)
+		{
 			currentGameState = GameState.SCORING;
 			return;
 		}
 		Card card = null;
 
 		// Poll the current player to see if he played a card and store it.
-		if (gameTable.getCardsOnTable().size() < 3) {
+		if (gameTable.getCardsOnTable().size() < 3)
+		{
 			card = playersList.get(currentPlayer).playCard(this);
 		}
 
 		// If a card was played, add it to the table and set the next player's
 		// playACard to true so he can play.
-		if (card != null) {
-			if (firstCardPlayed == -1) firstCardPlayed = currentPlayer;
+		if (card != null)
+		{
+			if (firstCardPlayed == -1)
+				firstCardPlayed = currentPlayer;
 			++numCardsPlayed;
 			gameTable.getCardsOnTable().put(currentPlayer, card);
 			currentPlayer = ((currentPlayer + 1) % playersList.size());
@@ -295,8 +305,10 @@ public class Game extends GameCore {
 		}
 	}
 
-	private void checkRules() {
-		if (gameTable.getCardsOnTable().size() != 3 || firstCardPlayed == -1) return;
+	private void checkRules()
+	{
+		if (gameTable.getCardsOnTable().size() != 3 || firstCardPlayed == -1)
+			return;
 
 		int trickWinner = FiveHundredRules.trickWinner(gameTable.getCardsOnTable(), firstCardPlayed);
 		playersList.get(trickWinner).addTrick();
@@ -307,15 +319,18 @@ public class Game extends GameCore {
 		// gameTable.moveTrick(trickWinner, gameTime);
 	}
 
-	protected void draw(GameTime gameTime) {
+	protected void draw(GameTime gameTime)
+	{
 		gameTable.draw(spriteBatch);
-		for (int i = 0; i < playersList.size(); ++i) {
+		for (int i = 0; i < playersList.size(); ++i)
+		{
 			playersList.get(i).draw(spriteBatch);
 		}
 		fpsCounter.draw(gameTime);
 	}
 
-	protected void drawText(GameTime gameTime) {
+	protected void drawText(GameTime gameTime)
+	{
 		// TODO : Define fonts and colors
 		g.setColor(Color.WHITE);
 		g.setFont(gameFont);
@@ -323,15 +338,19 @@ public class Game extends GameCore {
 		// Display players name, score, number of tricks won and bids.
 		// If we are Bidding, display all bids, else display only the highest
 		// bid.
-		for (int i = 0; i < playersList.size(); ++i) {
+		for (int i = 0; i < playersList.size(); ++i)
+		{
 			g.drawString(playersList.get(i).getName() + " : " + playersList.get(i).getScore(),
 					playersTextPosition[i].getX(), playersTextPosition[i].getY());
 			g.drawString("Tricks won: " + playersList.get(i).getTricksWon(), playersTextPosition[i].getX(),
 					playersTextPosition[i].getY() + lineHeight);
-			if (currentGameState.equals(GameState.BIDDING) && playersList.get(i).hasBid()) {
+			if (currentGameState.equals(GameState.BIDDING) && playersList.get(i).hasBid())
+			{
 				g.drawString(playersList.get(i).getBid().getName(), playersTextPosition[i].getX(),
 						playersTextPosition[i].getY() - lineHeight);
-			} else if (currentGameState.equals(GameState.PLAYING)) {
+			}
+			else if (currentGameState.equals(GameState.PLAYING))
+			{
 				g.drawString(playersList.get(highestBidder).getBid().getName(),
 						playersTextPosition[highestBidder].getX(), playersTextPosition[highestBidder].getY()
 								- lineHeight);
@@ -349,9 +368,12 @@ public class Game extends GameCore {
 	 * first deal 3 cards to each player and the widow. The 4 to each player
 	 * and finally 3 to each player again.
 	 */
-	private void dealCards() {
-		for (int i = 0; i < 3; ++i) {
-			switch (i) {
+	private void dealCards()
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			switch (i)
+			{
 				case 0:
 					playersList.get(0).getHand().addCard(deck.dealCard());
 					playersList.get(0).getHand().addCard(deck.dealCard());
@@ -399,10 +421,12 @@ public class Game extends GameCore {
 	 * Set the initial X and Y position of each player's card for rendering.
 	 * These positions will later be modified after each card played.
 	 */
-	private void setPositions() {
+	private void setPositions()
+	{
 		// TODO : Clean up positions
 		// Set the x and y position of cards for rendering
-		for (int i = 0; i < 10; ++i) {
+		for (int i = 0; i < 10; ++i)
+		{
 			playersList
 					.get(0)
 					.getHand()
@@ -423,7 +447,8 @@ public class Game extends GameCore {
 		playersList.get(2).getHand().updateYPosition(this);
 	}
 
-	private void createMenuBar() {
+	private void createMenuBar()
+	{
 
 		// Define and add drop down menu to the menu bar
 		JMenu partieMenu = new JMenu("Partie");
@@ -453,31 +478,36 @@ public class Game extends GameCore {
 		// Add listener to each menu item
 		// File Menu
 		newGameAction.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				// Handle new game action.
 
 			}
 		});
 		optionsAction.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				// Handle options action.
 
 			}
 		});
 		appearanceAction.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				// Handle appearance action.
 
 			}
 		});
 		exitAction.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				stop();
 			}
 		});
 		// Help Menu
 		helpAction.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 
 			}
 		});
@@ -486,17 +516,20 @@ public class Game extends GameCore {
 
 	// Button to get out of SCORING state
 	private JButton nextRound = new JButton("next round");
-	
-	private void initNextRoundButton()  {
+
+	private void initNextRoundButton()
+	{
 		nextRound.setBounds(getScreenWidth() / 2 - 50, 50, 100, 22);
 		getFrame().add(nextRound);
 		nextRound.setVisible(false);
-		
+
 		nextRound.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				// advance the dealer to the next player
 				dealerIndex = (dealerIndex + 1) % playersList.size();
-				for (int i = 0; i < playersList.size(); ++i) {
+				for (int i = 0; i < playersList.size(); ++i)
+				{
 					// TODO : Enable this line when AI can bid by itself
 					// playersList.get(i).setBid(null);
 					playersList.get(i).clearTricksWon();
@@ -509,15 +542,17 @@ public class Game extends GameCore {
 			}
 		});
 	}
-	
+
 	// TODO : Refactor probably in it's own class
 	private Choice bidDropMenu = new Choice();
 	private JButton OK = new JButton("OK");
 
-	private void initBiddingComponents() {
+	private void initBiddingComponents()
+	{
 		bidDropMenu.setBounds(getScreenWidth() / 2 - 105, 30, 100, 30);
 		List<Bid> bidList = new ArrayList<Bid>(Arrays.asList(Bid.values()));
-		for (int i = 0; i < 26; ++i) {
+		for (int i = 0; i < 26; ++i)
+		{
 			bidDropMenu.add(bidList.get(i).getName());
 		}
 		bidDropMenu.select(0);
@@ -528,7 +563,8 @@ public class Game extends GameCore {
 		getFrame().add(OK);
 
 		OK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				int playerBidIndex = bidDropMenu.getSelectedIndex();
 				playersList.get(0).setBid(Bid.values()[playerBidIndex]);
 				bidDropMenu.setVisible(false);
@@ -536,17 +572,19 @@ public class Game extends GameCore {
 			}
 		});
 	}
-	
-	
-	public GameTable getGameTable() {
+
+	public GameTable getGameTable()
+	{
 		return gameTable;
 	}
-	
-	public int getFirstCardPlayed() {
+
+	public int getFirstCardPlayed()
+	{
 		return firstCardPlayed;
 	}
-	
-	public Bid getHighestBid () {
+
+	public Bid getHighestBid()
+	{
 		return highestBid;
 	}
 }

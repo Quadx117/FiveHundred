@@ -8,8 +8,8 @@ import gameCore.graphics.SpriteBatch.BlendState;
 import gameCore.input.Mouse;
 import gameCore.time.GameTime;
 
-public class FiveHundredPlayer extends Player {
-
+public class FiveHundredPlayer extends Player
+{
 	/**
 	 * The index of the selected card, that is, the one that is currently
 	 * hovered by the mouse.
@@ -19,12 +19,14 @@ public class FiveHundredPlayer extends Player {
 	/** Mouse buttons states used to determine single clicks */
 	public int previousButtonState, currentButtonState;
 
-	public FiveHundredPlayer(String name) {
+	public FiveHundredPlayer(String name)
+	{
 		super(name);
 		previousButtonState = currentButtonState = -1;
 	}
 
-	public void update(GameTime gameTime) {
+	public void update(GameTime gameTime)
+	{
 		// Store the previous mouse button states.
 		previousButtonState = currentButtonState;
 
@@ -44,28 +46,35 @@ public class FiveHundredPlayer extends Player {
 	 * and set selectedCardIndex accordingly.
 	 * 
 	 * <p>
-	 * The possible values for selectedCardIndex are 0 to hand.getCardCount() -
-	 * 1 if a card is selected or -1 if no card is selected.
+	 * The possible values for selectedCardIndex are 0 to hand.getCardCount() - 1 if a card is
+	 * selected or -1 if no card is selected.
 	 */
-	private void updateSelectedCard() {
+	private void updateSelectedCard()
+	{
 		selectedCardIndex = -1;
-		for (int i = 0; i < hand.getCardCount(); i++) {
+		for (int i = 0; i < hand.getCardCount(); i++)
+		{
 			// Selection area is bigger for the rightmost card in the player's
 			// hand since it is completely visible.
-			if (i == hand.getCardCount() - 1) {
+			if (i == hand.getCardCount() - 1)
+			{
 				if (Mouse.getX() > hand.getCard(i).getX()
 						&& Mouse.getX() < hand.getCard(i).getX() + hand.getCard(i).getSprite().getWidth()
 						&& Mouse.getY() > hand.getCard(i).getY()
-						&& Mouse.getY() < hand.getCard(i).getY() + hand.getCard(i).getSprite().getHeight()) {
+						&& Mouse.getY() < hand.getCard(i).getY() + hand.getCard(i).getSprite().getHeight())
+				{
 					selectedCardIndex = i;
 					break;
 				}
 				// For all the other cards, the selection area is smaller since
 				// they are partially covered by the card to their right
-			} else {
+			}
+			else
+			{
 				if (Mouse.getX() > hand.getCard(i).getX() && Mouse.getX() < hand.getCard(i).getX() + Card.cardSpacing
 						&& Mouse.getY() > hand.getCard(i).getY()
-						&& Mouse.getY() < hand.getCard(i).getY() + hand.getCard(i).getSprite().getHeight()) {
+						&& Mouse.getY() < hand.getCard(i).getY() + hand.getCard(i).getSprite().getHeight())
+				{
 					selectedCardIndex = i;
 					break;
 				}
@@ -73,11 +82,14 @@ public class FiveHundredPlayer extends Player {
 		}
 	}
 
-	public Card playCard(Game game) {
+	public Card playCard(Game game)
+	{
 		Card c = null;
-		if (yourTurn && selectedCardIndex >= 0 && currentButtonState != previousButtonState) {
+		if (yourTurn && selectedCardIndex >= 0 && currentButtonState != previousButtonState)
+		{
 			c = hand.getCard(selectedCardIndex);
-			if (!validCard(game, c)) {
+			if (!validCard(game, c))
+			{
 				return null;
 			}
 			yourTurn = false;
@@ -87,44 +99,55 @@ public class FiveHundredPlayer extends Player {
 		return c;
 	}
 
-	private boolean validCard(Game game, Card card) {
+	private boolean validCard(Game game, Card card)
+	{
 		boolean cardIsValid = false;
-		
-		if (!game.getGameTable().getCardsOnTable().isEmpty()) {
+
+		if (!game.getGameTable().getCardsOnTable().isEmpty())
+		{
 			Card firstCardPlayed = game.getGameTable().getCardsOnTable().get(game.getFirstCardPlayed());
-			
+
 			boolean hasSameSuitCards = false;
-			
-			for (int i = 0; i < hand.getCardCount(); ++i) {
-				if (hand.getCard(i).getSuit() == firstCardPlayed.getSuit()) {
+
+			for (int i = 0; i < hand.getCardCount(); ++i)
+			{
+				if (hand.getCard(i).getSuit() == firstCardPlayed.getSuit())
+				{
 					hasSameSuitCards = true;
 					break;
 				}
 			}
-			
-			if (!hasSameSuitCards) {
-					cardIsValid = true;
+
+			if (!hasSameSuitCards)
+			{
+				cardIsValid = true;
 			}
-			else {
-				if ((card.getSuit() == Card.JOKER) || (card.getSuit() == firstCardPlayed.getSuit())) {
+			else
+			{
+				if ((card.getSuit() == Card.JOKER) || (card.getSuit() == firstCardPlayed.getSuit()))
+				{
 					cardIsValid = true;
 				}
 			}
 		}
-		else {
+		else
+		{
 			cardIsValid = true;
 		}
-		
+
 		return cardIsValid;
 	}
-	
-	public void draw(SpriteBatch spriteBatch) {
-		for (int i = 0; i < hand.getCardCount(); i++) {
+
+	public void draw(SpriteBatch spriteBatch)
+	{
+		for (int i = 0; i < hand.getCardCount(); i++)
+		{
 			// Render cards in hand
 			spriteBatch.draw(hand.getCard(i).getSprite(), hand.getCard(i).getX(), hand.getCard(i).getY(),
 					BlendState.ALPHA_BLEND);
 			// Render card highlight
-			if (i == selectedCardIndex) {
+			if (i == selectedCardIndex)
+			{
 				spriteBatch.draw(Sprite.cardHighlight, hand.getCard(i).getX() - 2, hand.getCard(i).getY() - 2,
 						BlendState.ALPHA_BLEND);
 			}

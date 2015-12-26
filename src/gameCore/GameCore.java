@@ -22,14 +22,13 @@ import javax.swing.JFrame;
  * client. The game logic goes into Game which inherits from this class.
  * 
  * <p>
- * The mouse and it's associated listeners are handled here, but everything
- * related to the keyboard or other inputs have to be handled in the child
- * class.
+ * The mouse and it's associated listeners are handled here, but everything related to the keyboard
+ * or other inputs have to be handled in the child class.
  */
 // TODO: Keep name or rename to Game.
 // TODO: Keep name of folder or rename to framework
-public abstract class GameCore extends Canvas implements Runnable {
-
+public abstract class GameCore extends Canvas implements Runnable
+{
 	/** Default serial version UID */
 	private static final long serialVersionUID = 1L;
 
@@ -66,8 +65,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * default.
 	 * 
 	 * A fixed-step Game tries to call its update method on the fixed interval
-	 * specified in targetElapsedTime. Setting Game.isFixedTimeStep to
-	 * {@code true} causes a Game to use a fixed-step game loop. A new project
+	 * specified in targetElapsedTime. Setting Game.isFixedTimeStep to {@code true} causes a Game to
+	 * use a fixed-step game loop. A new project
 	 * uses a fixed-step game loop with a default targetElapsedTime of 1/60th of
 	 * a second.
 	 * 
@@ -76,8 +75,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * again, Game calls Draw. After Draw is called, if it is not time to call
 	 * update again, Game idles until it is time to call update.
 	 * 
-	 * If update takes too long to process, Game sets isRunningSlowly to
-	 * {@code true} and calls update again, without calling Draw in between.
+	 * If update takes too long to process, Game sets isRunningSlowly to {@code true} and calls
+	 * update again, without calling Draw in between.
 	 * When an update runs longer than the targetElapsedTime, Game responds by
 	 * calling update extra times and dropping the frames associated with those
 	 * updates to catch up. This ensures that update will have been called the
@@ -100,8 +99,7 @@ public abstract class GameCore extends Canvas implements Runnable {
 	private boolean isMouseVisible = true;
 
 	/**
-	 * Target time between calls to {@code update} when {@code isFixedTimeStep}
-	 * is {@code true}.
+	 * Target time between calls to {@code update} when {@code isFixedTimeStep} is {@code true}.
 	 * 
 	 * When the game frame rate is less than targetElapsedTime, isRunningSlowly
 	 * will return {@code true}.
@@ -109,8 +107,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * The default value for targetElapsedTime is 1/60th of a second.
 	 * 
 	 * A fixed-step Game tries to call its update method on the fixed interval
-	 * specified in targetElapsedTime. Setting Game.isFixedTimeStep to
-	 * {@code true} causes a Game to use a fixed-step game loop. A new project
+	 * specified in targetElapsedTime. Setting Game.isFixedTimeStep to {@code true} causes a Game to
+	 * use a fixed-step game loop. A new project
 	 * uses a fixed-step game loop with a default targetElapsedTime of 1/60th of
 	 * a second.
 	 * 
@@ -119,8 +117,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * again, Game calls Draw. After Draw is called, if it is not time to call
 	 * update again, Game idles until it is time to call update.
 	 * 
-	 * If update takes too long to process, Game sets isRunningSlowly to
-	 * {@code true} and calls update again, without calling Draw in between.
+	 * If update takes too long to process, Game sets isRunningSlowly to {@code true} and calls
+	 * update again, without calling Draw in between.
 	 * When an update
 	 * runs longer than the targetElapsedTime, Game responds by calling update
 	 * extra times and dropping the frames associated with those updates to
@@ -138,8 +136,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * the {@code draw()} method. The default value is 500 milliseconds.
 	 * 
 	 * If something outside update is taking too much time, we only catch up to
-	 * this maximum value. This makes sure we will call the {@code draw()}
-	 * method at least once every time interval specified by this variable.
+	 * this maximum value. This makes sure we will call the {@code draw()} method at least once
+	 * every time interval specified by this variable.
 	 */
 	private TimeSpan maxElapsedTime;
 
@@ -184,7 +182,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * screenHeight and title, which provides basic graphics device
 	 * initialization, game logic, rendering code, and a game loop.
 	 */
-	protected GameCore() {
+	protected GameCore()
+	{
 		this(800, 600, "Game");
 	}
 
@@ -192,7 +191,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * Initializes a new instance of this class, which provides basic graphics
 	 * device initialization, game logic, rendering code, and a game loop.
 	 */
-	protected GameCore(final int SCREEN_WIDTH, final int SCREEN_HEIGHT, String title) {
+	protected GameCore(final int SCREEN_WIDTH, final int SCREEN_HEIGHT, String title)
+	{
 		this.screenWidth = SCREEN_WIDTH;
 		this.screenHeight = SCREEN_HEIGHT;
 		this.title = title;
@@ -223,10 +223,10 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * method at the end of its constructor.
 	 * 
 	 * <p>
-	 * This makes it possible, for example, to add a menu bar in the constructor
-	 * of our child class.
+	 * This makes it possible, for example, to add a menu bar in the constructor of our child class.
 	 */
-	protected void initialize() {
+	protected void initialize()
+	{
 		Mouse mouse = new Mouse();
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
@@ -247,20 +247,25 @@ public abstract class GameCore extends Canvas implements Runnable {
 	}
 
 	/** Start the gameThread and gameTimer effectively starting the game */
-	public synchronized void start() {
+	public synchronized void start()
+	{
 		isRunning = true;
 		gameThread = new Thread(this, "Game");
 		gameThread.start();
 	}
 
 	/** Stop the game thread and exit */
-	public synchronized void stop() {
+	public synchronized void stop()
+	{
 		isRunning = false;
 		// simulate clicking on the X button on the frame to close it.
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-		try {
+		try
+		{
 			gameThread.join();
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -269,7 +274,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * Start the game timer, begin running the game loop, and start processing
 	 * events for the game. Automatically called by gameThread.start()
 	 */
-	public void run() {
+	public void run()
+	{
 		requestFocus();
 		gameTimer = Stopwatch.startNew();
 		gameLoop();
@@ -278,8 +284,10 @@ public abstract class GameCore extends Canvas implements Runnable {
 	}
 
 	/** The main loop for our game */
-	private void gameLoop() {
-		while (isRunning) {
+	private void gameLoop()
+	{
+		while (isRunning)
+		{
 			tick();
 			// draw();
 		}
@@ -301,14 +309,19 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * 
 	 * In a variable-step game, Update is called every time Tick is called.
 	 */
-	private void tick() {
-		do {
+	private void tick()
+	{
+		do
+		{
 			// Advance our time keepers.
 			currentTicks = gameTimer.getElapsedTicks();
 			// TODO : Do we want to have to handle the exception or not
-			try {
+			try
+			{
 				accumulatedElapsedTime.add(TimeSpan.fromTicks(currentTicks - previousTicks));
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -319,10 +332,14 @@ public abstract class GameCore extends Canvas implements Runnable {
 			 * to save battery life and/or release CPU time to other threads and
 			 * processes.
 			 */
-			if (isFixedTimeStep && accumulatedElapsedTime.getTicks() < targetElapsedTime.getTicks()) {
-				try {
+			if (isFixedTimeStep && accumulatedElapsedTime.getTicks() < targetElapsedTime.getTicks())
+			{
+				try
+				{
 					delta.setTimeSpan((TimeSpan.subtract(targetElapsedTime, accumulatedElapsedTime)).getTicks());
-				} catch (Exception e1) {
+				}
+				catch (Exception e1)
+				{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -331,31 +348,42 @@ public abstract class GameCore extends Canvas implements Runnable {
 				// NOTE: While sleep can be inaccurate in general it is
 				// accurate enough for frame limiting purposes if some
 				// fluctuation is an acceptable result.
-				try {
+				try
+				{
 					Thread.sleep(sleepTime);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else {
+			}
+			else
+			{
 				break;
 			}
 		} while (true);
 
 		// Do not allow any update to take longer than our maximum. This makes
 		// sure we draw once every time interval specified by maxElapsedTime.
-		if (accumulatedElapsedTime.getTicks() > maxElapsedTime.getTicks()) accumulatedElapsedTime = maxElapsedTime;
+		if (accumulatedElapsedTime.getTicks() > maxElapsedTime.getTicks())
+			accumulatedElapsedTime = maxElapsedTime;
 
-		if (isFixedTimeStep) {
+		if (isFixedTimeStep)
+		{
 			gameTime.setElapsedGameTime(targetElapsedTime);
 			int updateCount = 0;
 
 			// Perform as many full fixed length time steps as we can.
-			while (accumulatedElapsedTime.getTicks() >= targetElapsedTime.getTicks()) {
-				try {
+			while (accumulatedElapsedTime.getTicks() >= targetElapsedTime.getTicks())
+			{
+				try
+				{
 					gameTime.getTotalGameTime().add(targetElapsedTime);
 					accumulatedElapsedTime.subtract(targetElapsedTime);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -368,9 +396,13 @@ public abstract class GameCore extends Canvas implements Runnable {
 
 			// If we think we are running slowly, wait until the lag clears
 			// before resetting it
-			if (gameTime.isRunningSlowly()) {
-				if (updateFrameLag == 0) gameTime.setIsRunningSlowly(false);
-			} else if (updateFrameLag >= 5) {
+			if (gameTime.isRunningSlowly())
+			{
+				if (updateFrameLag == 0)
+					gameTime.setIsRunningSlowly(false);
+			}
+			else if (updateFrameLag >= 5)
+			{
 				// If we lag more than 5 frames, start thinking we are running
 				// slowly
 				gameTime.setIsRunningSlowly(true);
@@ -378,17 +410,23 @@ public abstract class GameCore extends Canvas implements Runnable {
 
 			// Every time we just do one update and one draw, then we are not
 			// running slowly, so decrease the lag
-			if (updateCount == 1 && updateFrameLag > 0) updateFrameLag--;
+			if (updateCount == 1 && updateFrameLag > 0)
+				updateFrameLag--;
 
 			// Draw needs to know the total elapsed time that occurred for the
 			// fixed length updates.
 			gameTime.setElapsedGameTime(TimeSpan.fromTicks(targetElapsedTime.getTicks() * updateCount));
-		} else {
+		}
+		else
+		{
 			// Perform a single variable length update.
 			gameTime.setElapsedGameTime(accumulatedElapsedTime);
-			try {
+			try
+			{
 				gameTime.getTotalGameTime().add(accumulatedElapsedTime);
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -398,9 +436,12 @@ public abstract class GameCore extends Canvas implements Runnable {
 		}
 
 		// Draw unless the update suppressed it.
-		if (suppressDraw) {
+		if (suppressDraw)
+		{
 			suppressDraw = false;
-		} else {
+		}
+		else
+		{
 			beginDraw();
 			draw(gameTime);
 			drawImageToScreen();
@@ -414,12 +455,12 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * drawImageToScreen, drawText and EndDraw.
 	 * 
 	 * <p>
-	 * This method clears the last frame drawn so we can start to draw the next
-	 * frame. It does so by setting the array of pixels used to draw on the
-	 * screen to black, making it available to receive new pixel data to be
-	 * drawn.
+	 * This method clears the last frame drawn so we can start to draw the next frame. It does so by
+	 * setting the array of pixels used to draw on the screen to black, making it available to
+	 * receive new pixel data to be drawn.
 	 */
-	private void beginDraw() {
+	private void beginDraw()
+	{
 		spriteBatch.clear();
 	}
 
@@ -430,13 +471,12 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * this method with game-specific logic.
 	 * 
 	 * <p>
-	 * update and draw are called at different rates depending on whether
-	 * isFixedTimeStep is {@code true} or {@code false}. If isFixedTimeStep is
-	 * {@code false}, update and draw will be called in a continuous loop,
-	 * sequentially as often as possible.. If isFixedTimeStep is {@code true},
-	 * update will be called at the interval specified in targetElapsedTime,
-	 * while draw will only be called if an update is not due. If draw is not
-	 * called, isRunningSlowly will be set to {@code true}.
+	 * update and draw are called at different rates depending on whether isFixedTimeStep is
+	 * {@code true} or {@code false}. If isFixedTimeStep is {@code false}, update and draw will be
+	 * called in a continuous loop, sequentially as often as possible.. If isFixedTimeStep is
+	 * {@code true}, update will be called at the interval specified in targetElapsedTime, while
+	 * draw will only be called if an update is not due. If draw is not called, isRunningSlowly will
+	 * be set to {@code true}.
 	 */
 	protected abstract void update(GameTime gameTime);
 
@@ -445,25 +485,27 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * method with game-specific rendering code.
 	 * 
 	 * <p>
-	 * update and draw are called at different rates depending on whether
-	 * isFixedTimeStep is {@code true} or {@code false}. If isFixedTimeStep is
-	 * {@code false}, update and draw will be called in a continuous loop,
-	 * sequentially as often as possible.. If isFixedTimeStep is {@code true},
-	 * update will be called at the interval specified in targetElapsedTime,
-	 * while draw will only be called if an update is not due. If draw is not
-	 * called, isRunningSlowly will be set to {@code true}.
+	 * update and draw are called at different rates depending on whether isFixedTimeStep is
+	 * {@code true} or {@code false}. If isFixedTimeStep is {@code false}, update and draw will be
+	 * called in a continuous loop, sequentially as often as possible.. If isFixedTimeStep is
+	 * {@code true}, update will be called at the interval specified in targetElapsedTime, while
+	 * draw will only be called if an update is not due. If draw is not called, isRunningSlowly will
+	 * be set to {@code true}.
 	 */
 	protected abstract void draw(GameTime gameTime);
 
 	/** Draws the image from the buffer to the screen */
-	private void drawImageToScreen() {
+	private void drawImageToScreen()
+	{
 		buffStrat = getBufferStrategy();
-		if (buffStrat == null) {
+		if (buffStrat == null)
+		{
 			createBufferStrategy(3);
 			return;
 		}
 
-		for (int i = 0; i < pixels.length; ++i) {
+		for (int i = 0; i < pixels.length; ++i)
+		{
 			pixels[i] = spriteBatch.screenPixels[i];
 		}
 
@@ -480,7 +522,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * Disposes of this graphics context and releases any system resources that
 	 * it is using and makes the next available buffer visible.
 	 */
-	private void endDraw() {
+	private void endDraw()
+	{
 		g.dispose();
 		buffStrat.show();
 	}
@@ -491,7 +534,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * Use this method if your game is recovering from a slow-running state, and
 	 * elapsedGameTime is too large to be useful.
 	 */
-	public void resetElapsedTime() {
+	public void resetElapsedTime()
+	{
 		gameTimer.reset();
 		gameTimer.start();
 		accumulatedElapsedTime = TimeSpan.ZERO;
@@ -510,7 +554,8 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * whether the player is performing any action. If no input is detected,
 	 * this method allows the game to skip drawing until the next update.
 	 */
-	public void suppressDraw() {
+	public void suppressDraw()
+	{
 		suppressDraw = true;
 	}
 
@@ -521,52 +566,58 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * 
 	 * @return The spriteBatch object used to draw a frame.
 	 */
-	public SpriteBatch getSpriteBatch() {
+	public SpriteBatch getSpriteBatch()
+	{
 		return spriteBatch;
 	}
 
 	/** Returns the width of the game screen */
-	public int getScreenWidth() {
+	public int getScreenWidth()
+	{
 		return screenWidth;
 	}
 
 	/** Returns the height of the game screen */
-	public int getScreenHeight() {
+	public int getScreenHeight()
+	{
 		return screenHeight;
 	}
 
 	/** Returns the frame used by this game */
-	public JFrame getFrame() {
+	public JFrame getFrame()
+	{
 		return frame;
 	}
 
 	/** Returns the title of this game */
-	public String getTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
 
 	/** Returns the maxElapsedTime used by this game */
-	public TimeSpan getMaxElapsedTime() {
+	public TimeSpan getMaxElapsedTime()
+	{
 		return maxElapsedTime;
 	}
 
 	/**
 	 * Returns {@code true} if this game uses fixed time step.
 	 * 
-	 * @return {@code true} if this game uses fixed time step; {@code false}
-	 *         otherwise.
+	 * @return {@code true} if this game uses fixed time step; {@code false} otherwise.
 	 */
-	public boolean isFixedTimeStep() {
+	public boolean isFixedTimeStep()
+	{
 		return isFixedTimeStep;
 	}
 
 	/**
 	 * Returns {@code true} if the mouse should be visible in the game.
 	 * 
-	 * @return {@code true} if the mouse cursor should be visible; {@code false}
-	 *         otherwise.
+	 * @return {@code true} if the mouse cursor should be visible; {@code false} otherwise.
 	 */
-	public boolean isMouseVisible() {
+	public boolean isMouseVisible()
+	{
 		return isMouseVisible;
 	}
 
@@ -574,14 +625,16 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * 
 	 * @return
 	 */
-	public GameComponentCollection getComponents() {
+	public GameComponentCollection getComponents()
+	{
 		return _components;
 	}// TODO: Events added and removed
 
 	// ++++++++++ SETTERS ++++++++++ //
 
 	/** Set the maxElapsedTime to the specified value */
-	public void setMaxElapsedTime(TimeSpan value) {
+	public void setMaxElapsedTime(TimeSpan value)
+	{
 		if (value.getTicks() < TimeSpan.ZERO.getTicks())
 			throw new IllegalArgumentException("The time must be positive.");
 		if (value.getTicks() < targetElapsedTime.getTicks())
@@ -594,9 +647,10 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * Set isFixedTimeStep to the specified value.
 	 * 
 	 * @param value
-	 *            the new value to be assigned to this variable.
+	 *        the new value to be assigned to this variable.
 	 */
-	public void setIsFixedTimeStep(boolean value) {
+	public void setIsFixedTimeStep(boolean value)
+	{
 		isFixedTimeStep = value;
 	}
 
@@ -604,9 +658,10 @@ public abstract class GameCore extends Canvas implements Runnable {
 	 * Set isMouseVisible to the specified value.
 	 * 
 	 * @param value
-	 *            the new value to be assigned to this variable.
+	 *        the new value to be assigned to this variable.
 	 */
-	public void setIsMouseVisible(boolean value) {
+	public void setIsMouseVisible(boolean value)
+	{
 		isMouseVisible = value;
 	}
 }

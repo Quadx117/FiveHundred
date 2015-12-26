@@ -10,21 +10,23 @@ import java.util.ArrayList;
 
 import fiveHundred.Game;
 
-public class Hand {
-
+public class Hand
+{
 	private ArrayList<Card> hand; // The cards in the hand.
 
 	/**
 	 * Create a hand that is initially empty.
 	 */
-	public Hand() {
+	public Hand()
+	{
 		hand = new ArrayList<Card>();
 	}
 
 	/**
 	 * Remove all cards from the hand, leaving it empty.
 	 */
-	public void clear() {
+	public void clear()
+	{
 		hand.clear();
 	}
 
@@ -32,12 +34,14 @@ public class Hand {
 	 * Add a card to the hand. It is added at the end of the current hand.
 	 * 
 	 * @param c
-	 *            the non-null card to be added.
+	 *        the non-null card to be added.
 	 * @throws NullPointerException
-	 *             if the parameter c is null.
+	 *         if the parameter c is null.
 	 */
-	public void addCard(Card c) throws NullPointerException {
-		if (c == null) throw new NullPointerException("Can't add a null card to a hand.");
+	public void addCard(Card c) throws NullPointerException
+	{
+		if (c == null)
+			throw new NullPointerException("Can't add a null card to a hand.");
 		hand.add(c);
 	}
 
@@ -45,10 +49,11 @@ public class Hand {
 	 * Remove a card from the hand, if present.
 	 * 
 	 * @param c
-	 *            the card to be removed. If c is null or if the card is not in
-	 *            the hand, then nothing is done.
+	 *        the card to be removed. If c is null or if the card is not in
+	 *        the hand, then nothing is done.
 	 */
-	public void removeCard(Card c) {
+	public void removeCard(Card c)
+	{
 		hand.remove(c);
 	}
 
@@ -56,15 +61,16 @@ public class Hand {
 	 * Remove the card in a specified position from the hand.
 	 * 
 	 * @param position
-	 *            the position of the card that is to be removed, where
-	 *            positions are starting from zero.
+	 *        the position of the card that is to be removed, where
+	 *        positions are starting from zero.
 	 * @throws IllegalArgumentException
-	 *             if the position does not exist in
-	 *             the hand, that is if the position is less than 0 or greater
-	 *             than
-	 *             or equal to the number of cards in the hand.
+	 *         if the position does not exist in
+	 *         the hand, that is if the position is less than 0 or greater
+	 *         than
+	 *         or equal to the number of cards in the hand.
 	 */
-	public void removeCard(int position) throws IllegalArgumentException {
+	public void removeCard(int position) throws IllegalArgumentException
+	{
 		if (position < 0 || position >= hand.size())
 			throw new IllegalArgumentException("Position does not exist in hand: " + position);
 		hand.remove(position);
@@ -73,7 +79,8 @@ public class Hand {
 	/**
 	 * Returns the number of cards in the hand.
 	 */
-	public int getCardCount() {
+	public int getCardCount()
+	{
 		return hand.size();
 	}
 
@@ -82,11 +89,12 @@ public class Hand {
 	 * is not removed from the hand!)
 	 * 
 	 * @param position
-	 *            the position of the card that is to be returned
+	 *        the position of the card that is to be returned
 	 * @throws IllegalArgumentException
-	 *             if position does not exist in the hand
+	 *         if position does not exist in the hand
 	 */
-	public Card getCard(int position) throws IllegalArgumentException {
+	public Card getCard(int position) throws IllegalArgumentException
+	{
 		if (position < 0 || position >= hand.size())
 			throw new IllegalArgumentException("Position does not exist in hand: " + position);
 		return (Card) hand.get(position);
@@ -98,14 +106,18 @@ public class Hand {
 	 * Note that aces are sorted according to their value. ACE_HIGH = 14
 	 * and ACE_LOW = 1;
 	 */
-	public void sortBySuit() {
+	public void sortBySuit()
+	{
 		ArrayList<Card> newHand = new ArrayList<Card>();
-		while (hand.size() > 0) {
+		while (hand.size() > 0)
+		{
 			int posMin = 0; // Position of minimal card.
 			Card c = (Card) hand.get(0); // Minimal card.
-			for (int i = 1; i < hand.size(); i++) {
+			for (int i = 1; i < hand.size(); i++)
+			{
 				Card c1 = (Card) hand.get(i);
-				if (c1.getSuit() < c.getSuit() || (c1.getSuit() == c.getSuit() && c1.getValue() < c.getValue())) {
+				if (c1.getSuit() < c.getSuit() || (c1.getSuit() == c.getSuit() && c1.getValue() < c.getValue()))
+				{
 					posMin = i;
 					c = c1;
 				}
@@ -122,14 +134,18 @@ public class Hand {
 	 * Note that aces are sorted according to their value. ACE_HIGH = 14
 	 * and ACE_LOW = 1;
 	 */
-	public void sortByValue() {
+	public void sortByValue()
+	{
 		ArrayList<Card> newHand = new ArrayList<Card>();
-		while (hand.size() > 0) {
+		while (hand.size() > 0)
+		{
 			int pos = 0; // Position of minimal card.
 			Card c = (Card) hand.get(0); // Minimal card.
-			for (int i = 1; i < hand.size(); i++) {
+			for (int i = 1; i < hand.size(); i++)
+			{
 				Card c1 = (Card) hand.get(i);
-				if (c1.getValue() < c.getValue() || (c1.getValue() == c.getValue() && c1.getSuit() < c.getSuit())) {
+				if (c1.getValue() < c.getValue() || (c1.getValue() == c.getValue() && c1.getSuit() < c.getSuit()))
+				{
 					pos = i;
 					c = c1;
 				}
@@ -145,13 +161,16 @@ public class Hand {
 	 * keeps the cards horizontally centered in the screen. Used for the player
 	 * since his cards are displayed vertically.
 	 */
-	public void updateXPosition(Game game) {
-		if (hand.isEmpty()) return;
+	public void updateXPosition(Game game)
+	{
+		if (hand.isEmpty())
+			return;
 
 		int totalWidth = hand.get(0).getSprite().getWidth() + Card.cardSpacing * (hand.size() - 1);
 		int x = game.getScreenWidth() / 2 - totalWidth / 2;
 
-		for (int i = 0; i < hand.size(); i++) {
+		for (int i = 0; i < hand.size(); i++)
+		{
 			hand.get(i).setX(x);
 			x += Card.cardSpacing;
 		}
@@ -163,13 +182,16 @@ public class Hand {
 	 * keeps the cards vertically centered in the screen. Used for the Left and
 	 * Right player since their cards are displayed horizontally.
 	 */
-	public void updateYPosition(Game game) {
-		if (hand.isEmpty()) return;
+	public void updateYPosition(Game game)
+	{
+		if (hand.isEmpty())
+			return;
 
 		int totalHeight = hand.get(0).getSprite().getHeight() + Card.cardSpacing * (hand.size() - 1);
 		int y = game.getScreenHeight() / 2 - totalHeight / 2;
 
-		for (int i = 0; i < hand.size(); i++) {
+		for (int i = 0; i < hand.size(); i++)
+		{
 			hand.get(i).setY(y);
 			y += Card.cardSpacing;
 		}

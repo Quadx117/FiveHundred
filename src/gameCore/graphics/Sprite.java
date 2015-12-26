@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Sprite {
-
+public class Sprite
+{
 	// TODO: Change the way sprites are created
 	// Card sprites here:
 	public static Sprite cardBackRed = new Sprite(80, 106, 1, 0, SpriteSheet.cardSet);
@@ -100,14 +100,16 @@ public class Sprite {
 	 * @param width
 	 * @param height
 	 */
-	protected Sprite(SpriteSheet sheet, int width, int height) {
+	protected Sprite(SpriteSheet sheet, int width, int height)
+	{
 		SIZE = (width == height) ? width : -1;
 		this.width = width;
 		this.height = height;
 		this.sheet = sheet;
 	}
 
-	public Sprite(int width, int height, int x, int y, SpriteSheet sheet) {
+	public Sprite(int width, int height, int x, int y, SpriteSheet sheet)
+	{
 		SIZE = (width == height) ? width : -1;
 		this.width = width;
 		this.height = height;
@@ -118,14 +120,16 @@ public class Sprite {
 		load();
 	}
 
-	public Sprite(String path) {
+	public Sprite(String path)
+	{
 		this.SIZE = -1;
 		this.x = 0;
 		this.y = 0;
 		load(path);
 	}
 
-	public Sprite(int size, int x, int y, SpriteSheet sheet) {
+	public Sprite(int size, int x, int y, SpriteSheet sheet)
+	{
 		SIZE = size;
 		this.width = size;
 		this.height = size;
@@ -136,7 +140,8 @@ public class Sprite {
 		load();
 	}
 
-	public Sprite(int width, int height, SpriteSheet sheet) {
+	public Sprite(int width, int height, SpriteSheet sheet)
+	{
 		SIZE = -1;
 		this.width = width;
 		this.height = height;
@@ -147,7 +152,8 @@ public class Sprite {
 		load();
 	}
 
-	public Sprite(int width, int height, int color) {
+	public Sprite(int width, int height, int color)
+	{
 		SIZE = -1;
 		this.width = width;
 		this.height = height;
@@ -155,7 +161,8 @@ public class Sprite {
 		setColor(color);
 	}
 
-	public Sprite(int width, int height, Color color) {
+	public Sprite(int width, int height, Color color)
+	{
 		SIZE = -1;
 		this.width = width;
 		this.height = height;
@@ -163,7 +170,8 @@ public class Sprite {
 		setColor(color.getRGB());
 	}
 
-	public Sprite(int size, int color) {
+	public Sprite(int size, int color)
+	{
 		SIZE = size;
 		this.width = size;
 		this.height = size;
@@ -171,7 +179,8 @@ public class Sprite {
 		setColor(color);
 	}
 
-	public Sprite(int size, Color color) {
+	public Sprite(int size, Color color)
+	{
 		SIZE = size;
 		this.width = size;
 		this.height = size;
@@ -179,7 +188,8 @@ public class Sprite {
 		setColor(color.getRGB());
 	}
 
-	public Sprite(int[] pixels, int width, int height) {
+	public Sprite(int[] pixels, int width, int height)
+	{
 		SIZE = (width == height) ? width : -1;
 		this.width = width;
 		this.height = height;
@@ -187,27 +197,35 @@ public class Sprite {
 		// create a copy of the array of pixels because it is passed by
 		// reference
 		this.pixels = new int[pixels.length];
-		for (int i = 0; i < pixels.length; i++) {
+		for (int i = 0; i < pixels.length; i++)
+		{
 			this.pixels[i] = pixels[i];
 		}
 	}
 
-	private void setColor(int color) {
-		for (int i = 0; i < width * height; i++) {
+	private void setColor(int color)
+	{
+		for (int i = 0; i < width * height; i++)
+		{
 			pixels[i] = color;
 		}
 	}
 
-	private void load() {
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
+	private void load()
+	{
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
 				pixels[x + y * width] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.SPRITE_WIDTH];
 			}
 		}
 	}
 
-	private void load(String path) {
-		try {
+	private void load(String path)
+	{
+		try
+		{
 			System.out.print("Trying to load: " + path + " ...");
 			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path));
 			System.out.println(" succeeded!");
@@ -215,18 +233,24 @@ public class Sprite {
 			this.height = image.getHeight();
 			pixels = new int[width * height];
 			image.getRGB(0, 0, width, height, pixels, 0, width);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			System.err.println(" failed!");
 		}
 	}
 
-	public int getWidth() {
+	public int getWidth()
+	{
 		return width;
 	}
 
-	public int getHeight() {
+	public int getHeight()
+	{
 		return height;
 	}
 }

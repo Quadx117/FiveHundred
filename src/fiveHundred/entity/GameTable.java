@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class GameTable {
-
+public class GameTable
+{
 	/** The texture used for this table's mat. The default color is red. */
 	private Sprite tableMat;
 
@@ -45,7 +45,7 @@ public class GameTable {
 	 * Each player's played card destination on the table. Used for the animation.
 	 */
 	private Vector2i[] playedCardDest = { new Vector2i(360, 207), new Vector2i(280, 101), new Vector2i(440, 101) };
-	
+
 	/**
 	 * The destination of each player's tricks won. Used for the animation.
 	 */
@@ -59,13 +59,15 @@ public class GameTable {
 	public int trickWinner = 0;
 
 	// TODO: Create AnimatedGameComponent class ?
-	private enum AnimationType {
+	private enum AnimationType
+	{
 		PLAY_ANIMATION, TRICK_ANIMATION, NONE
 	};
 
 	private AnimationType currentAnimation = AnimationType.NONE;
 
-	public GameTable() {
+	public GameTable()
+	{
 		tableMatList = new ArrayList<>();
 		tableMatList.add(new Sprite(800, 520, new SpriteSheet("/images/UI/tableRed.png", 800, 520)));
 		tableMatList.add(new Sprite(800, 480, new SpriteSheet("/images/UI/tableGreen.png", 800, 480)));
@@ -88,19 +90,24 @@ public class GameTable {
 	}
 
 	// TODO : Re-factor if for AnimationType and make a switch on it after ?
-	public void update(GameTime gameTime) {
+	public void update(GameTime gameTime)
+	{
 		if (cardsOnTable.size() == 1)
 			currentAnimation = AnimationType.PLAY_ANIMATION;
-		
+
 		/*
 		 * If there are cards played on the table we animate the cards to there
 		 * new position.
 		 */
-		if (currentAnimation == AnimationType.PLAY_ANIMATION) {
-			for (int i = 0; i < numberOfPlayers; ++i) {
+		if (currentAnimation == AnimationType.PLAY_ANIMATION)
+		{
+			for (int i = 0; i < numberOfPlayers; ++i)
+			{
 				Card card = cardsOnTable.get(i);
-				if (card == null) continue;
-				if (card.getX() != playedCardDest[i].getX() || card.getY() != playedCardDest[i].getY()) {
+				if (card == null)
+					continue;
+				if (card.getX() != playedCardDest[i].getX() || card.getY() != playedCardDest[i].getY())
+				{
 					moveCard(i, playedCardDest[i], gameTime);
 				}
 			}
@@ -113,15 +120,20 @@ public class GameTable {
 		 * opponents.
 		 */
 		// TODO: Use TimeSpan instead
-		if (cardsOnTable.size() == 3) {
+		if (cardsOnTable.size() == 3)
+		{
 			// Update the elapsed time
 			elapsedTime += (int) gameTime.getElapsedGameTime().getTotalMilliseconds();
-			if (elapsedTime >= playedCardWaitTime) {
+			if (elapsedTime >= playedCardWaitTime)
+			{
 				currentAnimation = AnimationType.TRICK_ANIMATION;
 				if (cardsOnTable.get(trickWinner).getX() != tricksDestination[trickWinner].getX()
-						|| cardsOnTable.get(trickWinner).getY() != tricksDestination[trickWinner].getY()) {
+						|| cardsOnTable.get(trickWinner).getY() != tricksDestination[trickWinner].getY())
+				{
 					moveTrick(tricksDestination[trickWinner], gameTime);
-				} else {
+				}
+				else
+				{
 					currentAnimation = AnimationType.NONE;
 					cardsOnTable.clear();
 					elapsedTime = 0;
@@ -134,11 +146,15 @@ public class GameTable {
 	 * Moves the card on the table at position index towards the destination
 	 * based on elapsed gameTime.
 	 * 
-	 * @param index The index of the card to move on the table. 
-	 * @param destination A Vector2i representing the destination of the card.
-	 * @param gameTime In-game time component.
+	 * @param index
+	 *        The index of the card to move on the table.
+	 * @param destination
+	 *        A Vector2i representing the destination of the card.
+	 * @param gameTime
+	 *        In-game time component.
 	 */
-	private void moveCard(int index, Vector2i destination, GameTime gameTime) {
+	private void moveCard(int index, Vector2i destination, GameTime gameTime)
+	{
 
 		// Calculate the delta separating us from our destination
 		double delatX = destination.getX() - cardsOnTable.get(index).getX();
@@ -149,15 +165,21 @@ public class GameTable {
 		int newX = (int) (Math.cos(angle) * speed * gameTime.getElapsedGameTime().getTotalMilliseconds());
 		int newY = (int) (Math.sin(angle) * speed * gameTime.getElapsedGameTime().getTotalMilliseconds());
 		if (newX < 0 && cardsOnTable.get(index).getX() + newX < destination.getX() || newX > 0
-				&& cardsOnTable.get(index).getX() + newX > destination.getX()) {
+				&& cardsOnTable.get(index).getX() + newX > destination.getX())
+		{
 			cardsOnTable.get(index).setX(destination.getX());
-		} else {
+		}
+		else
+		{
 			cardsOnTable.get(index).setX(cardsOnTable.get(index).getX() + newX);
 		}
 		if (newY < 0 && cardsOnTable.get(index).getY() + newY < destination.getY() || newY > 0
-				&& cardsOnTable.get(index).getY() + newY > destination.getY()) {
+				&& cardsOnTable.get(index).getY() + newY > destination.getY())
+		{
 			cardsOnTable.get(index).setY(destination.getY());
-		} else {
+		}
+		else
+		{
 			cardsOnTable.get(index).setY(cardsOnTable.get(index).getY() + newY);
 		}
 	}
@@ -166,23 +188,31 @@ public class GameTable {
 	 * Moves the all the cards on the table towards the tricks winner
 	 * destination based on elapsed gameTime.
 	 * 
-	 * @param destination A Vector2i representing the destination of the card.
-	 * @param gameTime In-game time component.
+	 * @param destination
+	 *        A Vector2i representing the destination of the card.
+	 * @param gameTime
+	 *        In-game time component.
 	 */
-	private void moveTrick(Vector2i destination, GameTime gameTime) {
-		for (int i = 0; i < cardsOnTable.size(); ++i) {
+	private void moveTrick(Vector2i destination, GameTime gameTime)
+	{
+		for (int i = 0; i < cardsOnTable.size(); ++i)
+		{
 			moveCard(i, destination, gameTime);
 		}
 	}
 
-	public void draw(SpriteBatch spriteBatch) {
+	public void draw(SpriteBatch spriteBatch)
+	{
 		spriteBatch.draw(tableMat, 0, 0, BlendState.OPAQUE);
 
 		// Render the cardsOnTable if any
-		if (!cardsOnTable.isEmpty()) {
-			for (int i = 0; i < numberOfPlayers; ++i) {
+		if (!cardsOnTable.isEmpty())
+		{
+			for (int i = 0; i < numberOfPlayers; ++i)
+			{
 				Card card = cardsOnTable.get(i);
-				if (card == null) continue;
+				if (card == null)
+					continue;
 				spriteBatch.draw(card.getSprite(), card.getX(), card.getY(), BlendState.ALPHA_BLEND);
 			}
 		}
@@ -195,7 +225,8 @@ public class GameTable {
 	 * 
 	 * @return this table's cardsOnTable object.
 	 * */
-	public HashMap<Integer, Card> getCardsOnTable() {
+	public HashMap<Integer, Card> getCardsOnTable()
+	{
 		return cardsOnTable;
 	}
 }

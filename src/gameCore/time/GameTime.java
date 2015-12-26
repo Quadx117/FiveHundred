@@ -4,8 +4,8 @@ package gameCore.time;
  * Snapshot of the game timing state expressed in values that can be used by
  * variable-step (real time) or fixed-step (game time) games.
  */
-public class GameTime {
-
+public class GameTime
+{
 	/** The amount of game time since the start of the game. */
 	private TimeSpan totalGameTime;
 
@@ -20,11 +20,12 @@ public class GameTime {
 	private boolean isRunningSlowly;
 
 	/**
-	 * Creates a new instance of GameTime with it's members initialized to
-	 * {@link TimeSpan.ZERO}. This constructor should be used for the games main
+	 * Creates a new instance of GameTime with it's members initialized to {@link TimeSpan.ZERO}.
+	 * This constructor should be used for the games main
 	 * game time.
 	 */
-	public GameTime() {
+	public GameTime()
+	{
 		this(TimeSpan.ZERO, TimeSpan.ZERO);
 	}
 
@@ -32,13 +33,14 @@ public class GameTime {
 	 * Creates a new instance of GameTime with the specified values.
 	 * 
 	 * @param totalGameTime
-	 *            The value used to set the initial totalGameTime for this
-	 *            GameTime.
+	 *        The value used to set the initial totalGameTime for this
+	 *        GameTime.
 	 * @param elapsedGameTime
-	 *            The value used to set the initial elapsedGameTime for this
-	 *            GameTime.
+	 *        The value used to set the initial elapsedGameTime for this
+	 *        GameTime.
 	 */
-	public GameTime(TimeSpan totalGameTime, TimeSpan elapsedGameTime) {
+	public GameTime(TimeSpan totalGameTime, TimeSpan elapsedGameTime)
+	{
 		this.totalGameTime = new TimeSpan(totalGameTime);
 		this.elapsedGameTime = new TimeSpan(elapsedGameTime);
 		isRunningSlowly = false;
@@ -48,16 +50,17 @@ public class GameTime {
 	 * Creates a new instance of GameTime with the specified values.
 	 * 
 	 * @param totalGameTime
-	 *            The value used to set the initial totalGameTime for this
-	 *            GameTime.
+	 *        The value used to set the initial totalGameTime for this
+	 *        GameTime.
 	 * @param elapsedGameTime
-	 *            The value used to set the initial elapsedGameTime for this
-	 *            GameTime.
+	 *        The value used to set the initial elapsedGameTime for this
+	 *        GameTime.
 	 * @param isRunningSlowly
-	 *            The value used to set the initial isRunningSlowly for this
-	 *            GameTime.
+	 *        The value used to set the initial isRunningSlowly for this
+	 *        GameTime.
 	 */
-	public GameTime(TimeSpan totalRealTime, TimeSpan elapsedRealTime, boolean isRunningSlowly) {
+	public GameTime(TimeSpan totalRealTime, TimeSpan elapsedRealTime, boolean isRunningSlowly)
+	{
 		this.totalGameTime = totalRealTime;
 		this.elapsedGameTime = elapsedRealTime;
 		this.isRunningSlowly = isRunningSlowly;
@@ -69,13 +72,17 @@ public class GameTime {
 	 * accordingly.
 	 * 
 	 * @param elapsedTicks
-	 *            The value to set elapsedGameTime and to add to totalGameTime
+	 *        The value to set elapsedGameTime and to add to totalGameTime
 	 */
-	public void update(long elapsedTicks) {
-		try {
+	public void update(long elapsedTicks)
+	{
+		try
+		{
 			elapsedGameTime.setTimeSpan(elapsedTicks);
 			totalGameTime.add(elapsedGameTime);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -83,28 +90,34 @@ public class GameTime {
 
 	// TODO : Finish comments
 	// ++++++++++ GETTERS ++++++++++ //
-	public TimeSpan getElapsedGameTime() {
+	public TimeSpan getElapsedGameTime()
+	{
 		return elapsedGameTime;
 	}
 
-	public TimeSpan getTotalGameTime() {
+	public TimeSpan getTotalGameTime()
+	{
 		return totalGameTime;
 	}
 
-	public boolean isRunningSlowly() {
+	public boolean isRunningSlowly()
+	{
 		return isRunningSlowly;
 	}
 
 	// ++++++++++ SETTERS ++++++++++ //
-	public void setElapsedGameTime(TimeSpan ts) {
+	public void setElapsedGameTime(TimeSpan ts)
+	{
 		elapsedGameTime = ts;
 	}
 
-	public void setTotalGameTime(TimeSpan ts) {
+	public void setTotalGameTime(TimeSpan ts)
+	{
 		totalGameTime = ts;
 	}
 
-	public void setIsRunningSlowly(boolean value) {
+	public void setIsRunningSlowly(boolean value)
+	{
 		isRunningSlowly = value;
 	}
 

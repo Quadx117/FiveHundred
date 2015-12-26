@@ -5,7 +5,8 @@ import gameCore.math.Vector2i;
 import java.awt.Color;
 import java.awt.Rectangle;
 
-public class SpriteBatch {
+public class SpriteBatch
+{
 	// TODO : Add support for the other types of blend states
 	/**
 	 * The enumeration for the different types of blending states.
@@ -13,7 +14,8 @@ public class SpriteBatch {
 	 * @author Eric Perron
 	 * 
 	 */
-	public static enum BlendState {
+	public static enum BlendState
+	{
 		/**
 		 * A built-in state object with settings for additive blend that is
 		 * adding the destination data to the source data without using alpha.
@@ -46,7 +48,8 @@ public class SpriteBatch {
 	 * @author Eric Perron
 	 * 
 	 */
-	public static enum InterpolationType {
+	public static enum InterpolationType
+	{
 		/**
 		 * A built-in state object with settings for nearest neighbor
 		 * interpolation as the resizing method.
@@ -83,7 +86,8 @@ public class SpriteBatch {
 	 */
 	private int xOffset, yOffset;
 
-	public SpriteBatch(int width, int height) {
+	public SpriteBatch(int width, int height)
+	{
 		this.width = width;
 		this.height = height;
 		screenPixels = new int[width * height];
@@ -94,7 +98,8 @@ public class SpriteBatch {
 	 * receive new pixel data to be drawn. This method is the one called before
 	 * each frame in the GameCore class.
 	 */
-	public void clear() {
+	public void clear()
+	{
 		clear(0);
 	}
 
@@ -103,9 +108,10 @@ public class SpriteBatch {
 	 * available to receive new pixel data to be drawn.
 	 * 
 	 * @param color
-	 *            the color to clear the screen to using .
+	 *        the color to clear the screen to using .
 	 */
-	public void clear(Color color) {
+	public void clear(Color color)
+	{
 		clear(color.getRGB());
 	}
 
@@ -114,11 +120,13 @@ public class SpriteBatch {
 	 * available to receive new pixel data to be drawn.
 	 * 
 	 * @param color
-	 *            the color to clear the screen to specified as an integer
-	 *            value.
+	 *        the color to clear the screen to specified as an integer
+	 *        value.
 	 */
-	public void clear(int color) {
-		for (int i = 0; i < screenPixels.length; ++i) {
+	public void clear(int color)
+	{
+		for (int i = 0; i < screenPixels.length; ++i)
+		{
 			screenPixels[i] = color;
 		}
 	}
@@ -129,16 +137,15 @@ public class SpriteBatch {
 	 * any scaling.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param xDestPos
-	 *            The x destination position (in screen coordinates) at which to
-	 *            draw the sprite.
+	 *        The x destination position (in screen coordinates) at which to
+	 *        draw the sprite.
 	 * @param yDestPos
-	 *            The y destination position (in screen coordinates) at which to
-	 *            draw the sprite.
+	 *        The y destination position (in screen coordinates) at which to
+	 *        draw the sprite.
 	 * @param fixedPos
-	 *            {@code false} if the sprite is fixed to the screen position,
-	 *            {@code true} otherwise.
+	 *        {@code false} if the sprite is fixed to the screen position, {@code true} otherwise.
 	 */
 	/*
 	 * public void renderSprite(Sprite sprite, int xDestPos, int yDestPos,
@@ -165,28 +172,29 @@ public class SpriteBatch {
 	 * will let what is behind it be seen unaltered.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param xDestPos
-	 *            The x destination position (in screen coordinates) at which to
-	 *            draw the sprite.
+	 *        The x destination position (in screen coordinates) at which to
+	 *        draw the sprite.
 	 * @param yDestPos
-	 *            The y destination position (in screen coordinates) at which to
-	 *            draw the sprite.
+	 *        The y destination position (in screen coordinates) at which to
+	 *        draw the sprite.
 	 * @param tint
-	 *            The color to tint a sprite. Use Color.WHITE for full color
-	 *            with no tinting.
+	 *        The color to tint a sprite. Use Color.WHITE for full color
+	 *        with no tinting.
 	 * @param alphaFactor
-	 *            alpha value applied to the new color ranging from 0.0f
-	 *            (completely dark) to 1.0f.
+	 *        alpha value applied to the new color ranging from 0.0f
+	 *        (completely dark) to 1.0f.
 	 * @param alphaColor
-	 *            The color in the ARGB model that will be transparent.
+	 *        The color in the ARGB model that will be transparent.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
 	public void renderSprite(Sprite sprite, int xDestPos, int yDestPos, Color tint, float alphaFactor, int alphaColor,
-			BlendState blendState) throws NullPointerException {
+			BlendState blendState) throws NullPointerException
+	{
 
 		checkValidSprite(sprite);
 
@@ -198,9 +206,11 @@ public class SpriteBatch {
 		// Calculate the new foreground color alpha component
 		int foregroundAlpha = (int) (alphaFactor * 255);
 
-		for (int y = 0; y < sprite.getHeight(); y++) {
+		for (int y = 0; y < sprite.getHeight(); y++)
+		{
 			int ya = y + yDestPos;
-			for (int x = 0; x < sprite.getWidth(); x++) {
+			for (int x = 0; x < sprite.getWidth(); x++)
+			{
 				int xa = x + xDestPos;
 
 				// The color of the pixel about to be drawn.
@@ -208,10 +218,12 @@ public class SpriteBatch {
 
 				// If current pixel is out of screen bounds or current pixel
 				// color equals alphaColor, skip it.
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height || foregroundCol == alphaColor) continue;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height || foregroundCol == alphaColor)
+					continue;
 
 				// The alpha value of the pixel about to be drawn.
-				if (alphaFactor < 0.0f) {
+				if (alphaFactor < 0.0f)
+				{
 					foregroundAlpha = (foregroundCol >> 24) & 0xff;
 				}
 				// The color of the pixel already there.
@@ -225,7 +237,8 @@ public class SpriteBatch {
 				int foregroundB = (foregroundCol) & 0xff;
 
 				// Using Color.WHITE would have no effect so skip this
-				if (!tint.equals(Color.WHITE)) {
+				if (!tint.equals(Color.WHITE))
+				{
 					// Typical tint formula -> original component * tint / 255
 					foregroundR = foregroundR * rTint / 255;
 					foregroundG = foregroundG * gTint / 255;
@@ -233,9 +246,12 @@ public class SpriteBatch {
 				}
 
 				// If alpha is 255 it completely overrides the existing color.
-				if (foregroundAlpha == 255 || blendState == BlendState.OPAQUE) {
+				if (foregroundAlpha == 255 || blendState == BlendState.OPAQUE)
+				{
 					color = foregroundAlpha << 24 | foregroundR << 16 | foregroundG << 8 | foregroundB;
-				} else if (blendState == BlendState.ALPHA_BLEND) {
+				}
+				else if (blendState == BlendState.ALPHA_BLEND)
+				{
 					// Do the alpha-blending.
 					int backgroundR = (backgroundCol >> 16) & 0xff;
 					int backgroundG = (backgroundCol >> 8) & 0xff;
@@ -245,7 +261,9 @@ public class SpriteBatch {
 					int g = (foregroundG * foregroundAlpha / 255) + (backgroundG * (255 - foregroundAlpha) / 255);
 					int b = (foregroundB * foregroundAlpha / 255) + (backgroundB * (255 - foregroundAlpha) / 255);
 					color = r << 16 | g << 8 | b;
-				} else {
+				}
+				else
+				{
 					// Defaults to BlendState.OPAQUE after tinting.
 					color = foregroundAlpha << 24 | foregroundR << 16 | foregroundG << 8 | foregroundB;
 				}
@@ -260,17 +278,18 @@ public class SpriteBatch {
 	 * option.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param xDestPos
-	 *            The X position at which to begin drawing the sprite.
+	 *        The X position at which to begin drawing the sprite.
 	 * @param yDestPos
-	 *            The Y position at which to begin drawing the sprite.
+	 *        The Y position at which to begin drawing the sprite.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
-	public void draw(Sprite sprite, int xDestPos, int yDestPos, BlendState blendState) throws NullPointerException {
+	public void draw(Sprite sprite, int xDestPos, int yDestPos, BlendState blendState) throws NullPointerException
+	{
 		this.draw(sprite, xDestPos, yDestPos, Color.WHITE, -1.0f, blendState);
 	}
 
@@ -279,16 +298,17 @@ public class SpriteBatch {
 	 * option.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param position
-	 *            The Vector2i containing the x and y position at which to begin
-	 *            drawing the sprite.
+	 *        The Vector2i containing the x and y position at which to begin
+	 *        drawing the sprite.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
-	public void draw(Sprite sprite, Vector2i position, BlendState blendState) throws NullPointerException {
+	public void draw(Sprite sprite, Vector2i position, BlendState blendState) throws NullPointerException
+	{
 		this.draw(sprite, position.getX(), position.getY(), Color.WHITE, -1.0f, blendState);
 	}
 
@@ -297,21 +317,22 @@ public class SpriteBatch {
 	 * option.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param xDestPos
-	 *            The X position at which to begin drawing the sprite.
+	 *        The X position at which to begin drawing the sprite.
 	 * @param yDestPos
-	 *            The Y position at which to begin drawing the sprite.
+	 *        The Y position at which to begin drawing the sprite.
 	 * @param tint
-	 *            The color to tint a sprite. Use Color.WHITE for full color
-	 *            with no tinting.
+	 *        The color to tint a sprite. Use Color.WHITE for full color
+	 *        with no tinting.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
 	public void draw(Sprite sprite, int xDestPos, int yDestPos, Color tint, BlendState blendState)
-			throws NullPointerException {
+			throws NullPointerException
+	{
 
 		this.draw(sprite, xDestPos, yDestPos, tint, -1.0f, blendState);
 	}
@@ -321,19 +342,20 @@ public class SpriteBatch {
 	 * option.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param position
-	 *            The Vector2i containing the x and y position at which to begin
-	 *            drawing the sprite.
+	 *        The Vector2i containing the x and y position at which to begin
+	 *        drawing the sprite.
 	 * @param tint
-	 *            The color to tint a sprite. Use Color.WHITE for full color
-	 *            with no tinting.
+	 *        The color to tint a sprite. Use Color.WHITE for full color
+	 *        with no tinting.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
-	public void draw(Sprite sprite, Vector2i position, Color tint, BlendState blendState) throws NullPointerException {
+	public void draw(Sprite sprite, Vector2i position, Color tint, BlendState blendState) throws NullPointerException
+	{
 		this.draw(sprite, position.getX(), position.getY(), tint, -1.0f, blendState);
 	}
 
@@ -353,28 +375,28 @@ public class SpriteBatch {
 	 * <p>
 	 * <code>(int) alphaFactor * 255</code>
 	 * <p>
-	 * We then do a typical alpha-blending between the background color and the
-	 * new color.
+	 * We then do a typical alpha-blending between the background color and the new color.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param xDestPos
-	 *            The X position at which to begin drawing the sprite.
+	 *        The X position at which to begin drawing the sprite.
 	 * @param yDestPos
-	 *            The Y position at which to begin drawing the sprite.
+	 *        The Y position at which to begin drawing the sprite.
 	 * @param tint
-	 *            The color to tint a sprite. Use Color.WHITE for full color
-	 *            with no tinting.
+	 *        The color to tint a sprite. Use Color.WHITE for full color
+	 *        with no tinting.
 	 * @param alphaFactor
-	 *            alpha value applied to the new color ranging from 0.0f
-	 *            (completely dark) to 1.0f.
+	 *        alpha value applied to the new color ranging from 0.0f
+	 *        (completely dark) to 1.0f.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
 	public void draw(Sprite sprite, int xDestPos, int yDestPos, Color tint, float alphaFactor, BlendState blendState)
-			throws NullPointerException {
+			throws NullPointerException
+	{
 
 		checkValidSprite(sprite);
 		// The pixel about to be drawn is the foreground color and the existing
@@ -390,19 +412,23 @@ public class SpriteBatch {
 
 		// Cycle through all the sprites pixels. and apply tint and
 		// alpha-blending
-		for (int y = 0; y < sprite.getHeight(); y++) {
+		for (int y = 0; y < sprite.getHeight(); y++)
+		{
 			// Set our Y position relative to the screen.
 			int ya = y + yDestPos;
-			for (int x = 0; x < sprite.getWidth(); x++) {
+			for (int x = 0; x < sprite.getWidth(); x++)
+			{
 				// Set our X position relative to the screen.
 				int xa = x + xDestPos;
 				// If this pixel is out of the screen's bound, skip it.
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height)
+					continue;
 
 				// The color of the pixel about to be drawn.
 				int foregroundCol = sprite.pixels[x + y * sprite.getWidth()];
 				// The alpha value of the pixel about to be drawn.
-				if (alphaFactor < 0.0f) {
+				if (alphaFactor < 0.0f)
+				{
 					foregroundAlpha = (foregroundCol >> 24) & 0xff;
 				}
 				// The color of the pixel already there.
@@ -416,7 +442,8 @@ public class SpriteBatch {
 				int foregroundB = (foregroundCol) & 0xff;
 
 				// Using Color.WHITE would have no effect so skip this
-				if (!tint.equals(Color.WHITE)) {
+				if (!tint.equals(Color.WHITE))
+				{
 					// Typical tint formula -> original component * tint / 255
 					foregroundR = foregroundR * rTint / 255;
 					foregroundG = foregroundG * gTint / 255;
@@ -424,9 +451,12 @@ public class SpriteBatch {
 				}
 
 				// If alpha is 255 it completely overrides the existing color.
-				if (foregroundAlpha == 255 || blendState == BlendState.OPAQUE) {
+				if (foregroundAlpha == 255 || blendState == BlendState.OPAQUE)
+				{
 					col = foregroundAlpha << 24 | foregroundR << 16 | foregroundG << 8 | foregroundB;
-				} else if (blendState == BlendState.ALPHA_BLEND) {
+				}
+				else if (blendState == BlendState.ALPHA_BLEND)
+				{
 					// Do the alpha-blending.
 					int backgroundR = (backgroundCol >> 16) & 0xff;
 					int backgroundG = (backgroundCol >> 8) & 0xff;
@@ -436,7 +466,9 @@ public class SpriteBatch {
 					int g = (foregroundG * foregroundAlpha / 255) + (backgroundG * (255 - foregroundAlpha) / 255);
 					int b = (foregroundB * foregroundAlpha / 255) + (backgroundB * (255 - foregroundAlpha) / 255);
 					col = r << 16 | g << 8 | b;
-				} else {
+				}
+				else
+				{
 					// Defaults to BlendState.OPAQUE after tinting.
 					col = foregroundAlpha << 24 | foregroundR << 16 | foregroundG << 8 | foregroundB;
 				}
@@ -450,23 +482,24 @@ public class SpriteBatch {
 	 * option.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param position
-	 *            The Vector2i containing the x and y position at which to begin
-	 *            drawing the sprite.
+	 *        The Vector2i containing the x and y position at which to begin
+	 *        drawing the sprite.
 	 * @param tint
-	 *            The color to tint a sprite. Use Color.WHITE for full color
-	 *            with no tinting.
+	 *        The color to tint a sprite. Use Color.WHITE for full color
+	 *        with no tinting.
 	 * @param alphaFactor
-	 *            alpha value applied to the new color ranging from 0.0f
-	 *            (completely dark) to 1.0f.
+	 *        alpha value applied to the new color ranging from 0.0f
+	 *        (completely dark) to 1.0f.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
 	public void draw(Sprite sprite, Vector2i position, Color tint, float alphaFactor, BlendState blendState)
-			throws NullPointerException {
+			throws NullPointerException
+	{
 		this.draw(sprite, position.getX(), position.getY(), tint, alphaFactor, blendState);
 	}
 
@@ -475,21 +508,22 @@ public class SpriteBatch {
 	 * image.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param destinationRectangle
-	 *            The destination's position and size. If the destination's size
-	 *            is equal to the sprite's size, no resizing will be done to the
-	 *            sprite.
+	 *        The destination's position and size. If the destination's size
+	 *        is equal to the sprite's size, no resizing will be done to the
+	 *        sprite.
 	 * @param interpolationType
-	 *            The type of interpolation used when resizing the sprite to
-	 *            match the destination's size.
+	 *        The type of interpolation used when resizing the sprite to
+	 *        match the destination's size.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
 	public void draw(Sprite sprite, Rectangle destinationRectangle, InterpolationType interpolationType,
-			BlendState blendState) throws NullPointerException {
+			BlendState blendState) throws NullPointerException
+	{
 		this.draw(sprite, destinationRectangle, interpolationType, Color.WHITE, -1.0f, blendState);
 	}
 
@@ -498,24 +532,25 @@ public class SpriteBatch {
 	 * image.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param destinationRectangle
-	 *            The destination's position and size. If the destination's size
-	 *            is equal to the sprite's size, no resizing will be done to the
-	 *            sprite.
+	 *        The destination's position and size. If the destination's size
+	 *        is equal to the sprite's size, no resizing will be done to the
+	 *        sprite.
 	 * @param interpolationType
-	 *            The type of interpolation used when resizing the sprite to
-	 *            match the destination's size.
+	 *        The type of interpolation used when resizing the sprite to
+	 *        match the destination's size.
 	 * @param tint
-	 *            The color to tint a sprite. Use Color.WHITE for full color
-	 *            with no tinting.
+	 *        The color to tint a sprite. Use Color.WHITE for full color
+	 *        with no tinting.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
 	public void draw(Sprite sprite, Rectangle destinationRectangle, InterpolationType interpolationType, Color tint,
-			BlendState blendState) throws NullPointerException {
+			BlendState blendState) throws NullPointerException
+	{
 		this.draw(sprite, destinationRectangle, interpolationType, tint, -1.0f, blendState);
 	}
 
@@ -537,31 +572,31 @@ public class SpriteBatch {
 	 * <p>
 	 * <code>(int) alphaFactor * 255</code>
 	 * <p>
-	 * We then do a typical alpha-blending between the background color and the
-	 * new color.
+	 * We then do a typical alpha-blending between the background color and the new color.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param destinationRectangle
-	 *            The destination's position and size. If the destination's size
-	 *            is equal to the sprite's size, no resizing will be done to the
-	 *            sprite.
+	 *        The destination's position and size. If the destination's size
+	 *        is equal to the sprite's size, no resizing will be done to the
+	 *        sprite.
 	 * @param interpolationType
-	 *            The type of interpolation used when resizing the sprite to
-	 *            match the destination's size.
+	 *        The type of interpolation used when resizing the sprite to
+	 *        match the destination's size.
 	 * @param tint
-	 *            The color to tint a sprite. Use Color.WHITE for full color
-	 *            with no tinting.
+	 *        The color to tint a sprite. Use Color.WHITE for full color
+	 *        with no tinting.
 	 * @param alphaFactor
-	 *            alpha value applied to the new color ranging from 0.0f
-	 *            (completely dark) to 1.0f.
+	 *        alpha value applied to the new color ranging from 0.0f
+	 *        (completely dark) to 1.0f.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 */
 	public void draw(Sprite sprite, Rectangle destinationRectangle, InterpolationType interpolationType, Color tint,
-			float alphaFactor, BlendState blendState) throws NullPointerException {
+			float alphaFactor, BlendState blendState) throws NullPointerException
+	{
 
 		checkValidSprite(sprite);
 
@@ -572,11 +607,13 @@ public class SpriteBatch {
 		// interpolation type and set our local variables accordingly.
 		// Otherwise, we set our local variables to the original's sprite
 		// values.
-		if (sprite.getWidth() != destinationRectangle.width || sprite.getHeight() != destinationRectangle.height) {
+		if (sprite.getWidth() != destinationRectangle.width || sprite.getHeight() != destinationRectangle.height)
+		{
 			spriteWidth = destinationRectangle.width;
 			spriteHeight = destinationRectangle.height;
 			spritePixels = new int[spriteWidth * spriteHeight];
-			switch (interpolationType) {
+			switch (interpolationType)
+			{
 				case NEAREST_NEIGHBOR:
 					spritePixels = resizeNearestNeighbor(sprite, spriteWidth, spriteHeight);
 					break;
@@ -588,7 +625,9 @@ public class SpriteBatch {
 				default:
 					// TODO: Do I want a default action or throw an exception.
 			}
-		} else {
+		}
+		else
+		{
 			spriteWidth = sprite.getWidth();
 			spriteHeight = sprite.getHeight();
 			spritePixels = new int[spriteWidth * spriteHeight];
@@ -607,21 +646,25 @@ public class SpriteBatch {
 		int foregroundAlpha = (int) (alphaFactor * 255);
 
 		// Cycle through all the sprites pixels.
-		for (int y = 0; y < spriteHeight; y++) {
+		for (int y = 0; y < spriteHeight; y++)
+		{
 			// Set our Y position relative to the screen.
 			int ya = y + yDestPos;
-			for (int x = 0; x < spriteWidth; x++) {
+			for (int x = 0; x < spriteWidth; x++)
+			{
 				// Set our X position relative to the screen.
 				int xa = x + xDestPos;
 				// If this pixel is out of the screen's bound, skip it.
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height)
+					continue;
 
 				// The color of the pixel about to be drawn.
 				int foregroundCol = spritePixels[x + y * spriteWidth];
 				// The color of the pixel already there.
 				int backgroundCol = screenPixels[xa + ya * width];
 				// The alpha value of the pixel about to be drawn.
-				if (alphaFactor < 0.0f) {
+				if (alphaFactor < 0.0f)
+				{
 					foregroundAlpha = (foregroundCol >> 24) & 0xff;
 				}
 				// The resulting color of the pixel to be drawn
@@ -633,7 +676,8 @@ public class SpriteBatch {
 				int foregroundB = (foregroundCol) & 0xff;
 
 				// Using Color.WHITE would have no effect so skip this
-				if (!tint.equals(Color.WHITE)) {
+				if (!tint.equals(Color.WHITE))
+				{
 					// Typical tint formula -> original component * tint / 255
 					foregroundR = foregroundR * rTint / 255;
 					foregroundG = foregroundG * gTint / 255;
@@ -641,9 +685,12 @@ public class SpriteBatch {
 				}
 
 				// If alpha is 255 it completely overrides the existing color.
-				if (foregroundAlpha == 255 || blendState == BlendState.OPAQUE) {
+				if (foregroundAlpha == 255 || blendState == BlendState.OPAQUE)
+				{
 					col = foregroundAlpha << 24 | foregroundR << 16 | foregroundG << 8 | foregroundB;
-				} else if (blendState == BlendState.ALPHA_BLEND) {
+				}
+				else if (blendState == BlendState.ALPHA_BLEND)
+				{
 					// Do the alpha-blending.
 					int backgroundR = (backgroundCol >> 16) & 0xff;
 					int backgroundG = (backgroundCol >> 8) & 0xff;
@@ -653,7 +700,9 @@ public class SpriteBatch {
 					int g = (foregroundG * foregroundAlpha / 255) + (backgroundG * (255 - foregroundAlpha) / 255);
 					int b = (foregroundB * foregroundAlpha / 255) + (backgroundB * (255 - foregroundAlpha) / 255);
 					col = r << 16 | g << 8 | b;
-				} else {
+				}
+				else
+				{
 					// Defaults to BlendState.OPAQUE after tinting.
 					col = foregroundAlpha << 24 | foregroundR << 16 | foregroundG << 8 | foregroundB;
 				}
@@ -680,39 +729,39 @@ public class SpriteBatch {
 	 * <p>
 	 * <code>(int) alphaFactor * 255</code>
 	 * <p>
-	 * We then do a typical alpha-blending between the background color and the
-	 * new color.
+	 * We then do a typical alpha-blending between the background color and the new color.
 	 * 
 	 * @param sprite
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param sourceRectangle
-	 *            The source's position and size. This argument can be null. A
-	 *            source's size smaller than the sprite's size means that we
-	 *            will be drawing only a portion of the sprite. Useful for
-	 *            animation strips.
+	 *        The source's position and size. This argument can be null. A
+	 *        source's size smaller than the sprite's size means that we
+	 *        will be drawing only a portion of the sprite. Useful for
+	 *        animation strips.
 	 * @param destinationRectangle
-	 *            The destination's position and size. If the destination's size
-	 *            is equal to the sprite's size, no resizing will be done to the
-	 *            sprite.
+	 *        The destination's position and size. If the destination's size
+	 *        is equal to the sprite's size, no resizing will be done to the
+	 *        sprite.
 	 * @param interpolationType
-	 *            The type of interpolation used when resizing the sprite to
-	 *            match the destination's size.
+	 *        The type of interpolation used when resizing the sprite to
+	 *        match the destination's size.
 	 * @param tint
-	 *            The color to tint a sprite. Use Color.WHITE for full color
-	 *            with no tinting.
+	 *        The color to tint a sprite. Use Color.WHITE for full color
+	 *        with no tinting.
 	 * @param alphaFactor
-	 *            alpha value applied to the new color ranging from 0.0f
-	 *            (completely dark) to 1.0f.
+	 *        alpha value applied to the new color ranging from 0.0f
+	 *        (completely dark) to 1.0f.
 	 * @param blendState
-	 *            The type of blending to use for this sprite.
+	 *        The type of blending to use for this sprite.
 	 * @throws NullPointerException
-	 *             If the sprite is null.
+	 *         If the sprite is null.
 	 * @throws IllegalArgumentException
-	 *             If the sourceRectangle size is bigger than the sprite size.
+	 *         If the sourceRectangle size is bigger than the sprite size.
 	 */
 	public void draw(Sprite sprite, Rectangle sourceRectangle, Rectangle destinationRectangle,
 			InterpolationType interpolationType, Color tint, float alphaFactor, BlendState blendState)
-			throws NullPointerException {
+			throws NullPointerException
+	{
 
 		if (sourceRectangle.width > sprite.getWidth() || sourceRectangle.height > sprite.getHeight())
 			throw new IllegalArgumentException("sourceRectangle cannot be bigger than sprite size");
@@ -727,11 +776,13 @@ public class SpriteBatch {
 		// Otherwise, we set our local variables to the original's sprite
 		// values.
 		if (sourceRectangle.width != destinationRectangle.width
-				|| sourceRectangle.height != destinationRectangle.height) {
+				|| sourceRectangle.height != destinationRectangle.height)
+		{
 			spriteWidth = destinationRectangle.width;
 			spriteHeight = destinationRectangle.height;
 			spritePixels = new int[spriteWidth * spriteHeight];
-			switch (interpolationType) {
+			switch (interpolationType)
+			{
 				case NEAREST_NEIGHBOR:
 					spritePixels = resizeNearestNeighbor(sprite, sourceRectangle.x, sourceRectangle.y, spriteWidth,
 							spriteHeight);
@@ -745,7 +796,9 @@ public class SpriteBatch {
 				default:
 					// TODO: Do I want a default action or throw an exception.
 			}
-		} else {
+		}
+		else
+		{
 			spriteWidth = sourceRectangle.width;
 			spriteHeight = sourceRectangle.height;
 			spritePixels = new int[spriteWidth * spriteHeight];
@@ -764,21 +817,25 @@ public class SpriteBatch {
 		int foregroundAlpha = (int) (alphaFactor * 255);
 
 		// Cycle through all the sprites pixels.
-		for (int y = sourceRectangle.y; y < spriteHeight; y++) {
+		for (int y = sourceRectangle.y; y < spriteHeight; y++)
+		{
 			// Set our Y position relative to the screen.
 			int ya = y + yDestPos;
-			for (int x = sourceRectangle.x; x < spriteWidth; x++) {
+			for (int x = sourceRectangle.x; x < spriteWidth; x++)
+			{
 				// Set our X position relative to the screen.
 				int xa = x + xDestPos;
 				// If this pixel is out of the screen's bound, skip it.
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height)
+					continue;
 
 				// The color of the pixel about to be drawn.
 				int foregroundCol = spritePixels[x + y * spriteWidth];
 				// The color of the pixel already there.
 				int backgroundCol = screenPixels[xa + ya * width];
 				// The alpha value of the pixel about to be drawn.
-				if (alphaFactor < 0.0f) {
+				if (alphaFactor < 0.0f)
+				{
 					foregroundAlpha = (foregroundCol >> 24) & 0xff;
 				}
 				// The resulting color of the pixel to be drawn
@@ -790,7 +847,8 @@ public class SpriteBatch {
 				int foregroundB = (foregroundCol) & 0xff;
 
 				// Using Color.WHITE would have no effect so skip this
-				if (!tint.equals(Color.WHITE)) {
+				if (!tint.equals(Color.WHITE))
+				{
 					// Typical tint formula -> original component * tint / 255
 					foregroundR = foregroundR * rTint / 255;
 					foregroundG = foregroundG * gTint / 255;
@@ -798,9 +856,12 @@ public class SpriteBatch {
 				}
 
 				// If alpha is 255 it completely overrides the existing color.
-				if (foregroundAlpha == 255 || blendState == BlendState.OPAQUE) {
+				if (foregroundAlpha == 255 || blendState == BlendState.OPAQUE)
+				{
 					col = foregroundAlpha << 24 | foregroundR << 16 | foregroundG << 8 | foregroundB;
-				} else if (blendState == BlendState.ALPHA_BLEND) {
+				}
+				else if (blendState == BlendState.ALPHA_BLEND)
+				{
 					// Do the alpha-blending.
 					int backgroundR = (backgroundCol >> 16) & 0xff;
 					int backgroundG = (backgroundCol >> 8) & 0xff;
@@ -810,7 +871,9 @@ public class SpriteBatch {
 					int g = (foregroundG * foregroundAlpha / 255) + (backgroundG * (255 - foregroundAlpha) / 255);
 					int b = (foregroundB * foregroundAlpha / 255) + (backgroundB * (255 - foregroundAlpha) / 255);
 					col = r << 16 | g << 8 | b;
-				} else {
+				}
+				else
+				{
 					// Defaults to BlendState.OPAQUE after tinting.
 					col = foregroundAlpha << 24 | foregroundR << 16 | foregroundG << 8 | foregroundB;
 				}
@@ -825,31 +888,36 @@ public class SpriteBatch {
 	 * is behind it be seen unaltered.
 	 * 
 	 * @param xDestPos
-	 *            The x destination position (in screen coordinates) at which to
-	 *            draw the sprite.
+	 *        The x destination position (in screen coordinates) at which to
+	 *        draw the sprite.
 	 * @param yDestPos
-	 *            The y destination position (in screen coordinates) at which to
-	 *            draw the sprite.
+	 *        The y destination position (in screen coordinates) at which to
+	 *        draw the sprite.
 	 * @param spriteFont
-	 *            The sprite to draw.
+	 *        The sprite to draw.
 	 * @param alphaColor
-	 *            The color in the ARGB model that will be transparent.
+	 *        The color in the ARGB model that will be transparent.
 	 * @param fixedPos
-	 *            {@code false} if the sprite is fixed to the screen position,
-	 *            {@code true} otherwise.
+	 *        {@code false} if the sprite is fixed to the screen position, {@code true} otherwise.
 	 */
-	public void drawString(Sprite spriteFont, int xDestPos, int yDestPos, int alphaColor, boolean fixedPos) {
-		if (fixedPos) {
+	public void drawString(Sprite spriteFont, int xDestPos, int yDestPos, int alphaColor, boolean fixedPos)
+	{
+		if (fixedPos)
+		{
 			xDestPos -= xOffset;
 			yDestPos -= yOffset;
 		}
-		for (int y = 0; y < spriteFont.getHeight(); y++) {
+		for (int y = 0; y < spriteFont.getHeight(); y++)
+		{
 			int ya = y + yDestPos;
-			for (int x = 0; x < spriteFont.getWidth(); x++) {
+			for (int x = 0; x < spriteFont.getWidth(); x++)
+			{
 				int xa = x + xDestPos;
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height)
+					continue;
 				int currentColor = spriteFont.pixels[x + y * spriteFont.getWidth()];
-				if (currentColor != alphaColor) screenPixels[xa + ya * width] = alphaColor;
+				if (currentColor != alphaColor)
+					screenPixels[xa + ya * width] = alphaColor;
 			}
 		}
 	}
@@ -859,20 +927,24 @@ public class SpriteBatch {
 	 * without any scaling. Useful for debugging.
 	 * 
 	 * @param sheet
-	 *            The sprite sheet to draw.
+	 *        The sprite sheet to draw.
 	 * @param xDestPos
-	 *            The x destination position (in screen coordinates) at which to
-	 *            draw the sprite sheet.
+	 *        The x destination position (in screen coordinates) at which to
+	 *        draw the sprite sheet.
 	 * @param yDestPos
-	 *            The y destination position (in screen coordinates) at which to
-	 *            draw the sprite sheet.
+	 *        The y destination position (in screen coordinates) at which to
+	 *        draw the sprite sheet.
 	 */
-	public void drawSheet(SpriteSheet sheet, int xDestPos, int yDestPos) {
-		for (int y = 0; y < sheet.SPRITE_HEIGHT; y++) {
+	public void drawSheet(SpriteSheet sheet, int xDestPos, int yDestPos)
+	{
+		for (int y = 0; y < sheet.SPRITE_HEIGHT; y++)
+		{
 			int ya = y + yDestPos;
-			for (int x = 0; x < sheet.SPRITE_WIDTH; x++) {
+			for (int x = 0; x < sheet.SPRITE_WIDTH; x++)
+			{
 				int xa = x + xDestPos;
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height)
+					continue;
 				screenPixels[xa + ya * width] = sheet.pixels[x + y * sheet.SPRITE_WIDTH];
 			}
 		}
@@ -882,20 +954,20 @@ public class SpriteBatch {
 	 * Draws the outline of a rectangle with the specified attributes.
 	 * 
 	 * @param xDestPos
-	 *            The x position of the top left corner.
+	 *        The x position of the top left corner.
 	 * @param yDestPos
-	 *            The y position of the top left corner.
+	 *        The y position of the top left corner.
 	 * @param width
-	 *            The width of the rectangle in pixels.
+	 *        The width of the rectangle in pixels.
 	 * @param height
-	 *            The height of the rectangle in pixels.
+	 *        The height of the rectangle in pixels.
 	 * @param color
-	 *            The color from Java's Color class.
+	 *        The color from Java's Color class.
 	 * @param fixed
-	 *            {@code false} if the sprite is fixed to the screen position,
-	 *            {@code true} otherwise.
+	 *        {@code false} if the sprite is fixed to the screen position, {@code true} otherwise.
 	 */
-	public void drawRect(int xDestPos, int yDestPos, int width, int height, Color color, boolean fixed) {
+	public void drawRect(int xDestPos, int yDestPos, int width, int height, Color color, boolean fixed)
+	{
 		this.drawRect(xDestPos, yDestPos, width, height, color.getRGB(), fixed);
 	}
 
@@ -903,35 +975,46 @@ public class SpriteBatch {
 	 * Draws the outline of a rectangle with the specified attributes.
 	 * 
 	 * @param xDestPos
-	 *            The x position of the top left corner.
+	 *        The x position of the top left corner.
 	 * @param yDestPos
-	 *            The y position of the top left corner.
+	 *        The y position of the top left corner.
 	 * @param width
-	 *            The width of the rectangle in pixels.
+	 *        The width of the rectangle in pixels.
 	 * @param height
-	 *            The height of the rectangle in pixels.
+	 *        The height of the rectangle in pixels.
 	 * @param color
-	 *            The color in the ARGB format.
+	 *        The color in the ARGB format.
 	 * @param fixed
-	 *            {@code false} if the sprite is fixed to the screen position,
-	 *            {@code true} otherwise.
+	 *        {@code false} if the sprite is fixed to the screen position, {@code true} otherwise.
 	 */
-	public void drawRect(int xDestPos, int yDestPos, int width, int height, int color, boolean fixed) {
-		if (fixed) {
+	public void drawRect(int xDestPos, int yDestPos, int width, int height, int color, boolean fixed)
+	{
+		if (fixed)
+		{
 			xDestPos -= xOffset;
 			yDestPos -= yOffset;
 		}
-		for (int x = xDestPos; x < xDestPos + width; x++) {
-			if (x < 0 || x >= this.width || yDestPos >= this.height) continue;
-			if (yDestPos > 0) screenPixels[x + yDestPos * this.width] = color;
-			if (yDestPos + height >= this.height) continue;
-			if (yDestPos + height > 0) screenPixels[x + (yDestPos + height) * this.width] = color;
+		for (int x = xDestPos; x < xDestPos + width; x++)
+		{
+			if (x < 0 || x >= this.width || yDestPos >= this.height)
+				continue;
+			if (yDestPos > 0)
+				screenPixels[x + yDestPos * this.width] = color;
+			if (yDestPos + height >= this.height)
+				continue;
+			if (yDestPos + height > 0)
+				screenPixels[x + (yDestPos + height) * this.width] = color;
 		}
-		for (int y = yDestPos; y <= yDestPos + height; y++) {
-			if (xDestPos >= this.width || y < 0 || y >= this.height) continue;
-			if (xDestPos > 0) screenPixels[xDestPos + y * this.width] = color;
-			if (xDestPos + width >= this.width) continue;
-			if (xDestPos + width > 0) screenPixels[(xDestPos + width) + y * this.width] = color;
+		for (int y = yDestPos; y <= yDestPos + height; y++)
+		{
+			if (xDestPos >= this.width || y < 0 || y >= this.height)
+				continue;
+			if (xDestPos > 0)
+				screenPixels[xDestPos + y * this.width] = color;
+			if (xDestPos + width >= this.width)
+				continue;
+			if (xDestPos + width > 0)
+				screenPixels[(xDestPos + width) + y * this.width] = color;
 		}
 	}
 
@@ -941,18 +1024,19 @@ public class SpriteBatch {
 	 * than or equal to 0.
 	 * 
 	 * @param sprite
-	 *            The original sprite to be resized.
+	 *        The original sprite to be resized.
 	 * @param newWidth
-	 *            The new sprite width.
+	 *        The new sprite width.
 	 * @param newHeight
-	 *            The new sprite height.
+	 *        The new sprite height.
 	 * @return The reference to the array of pixels containing the resized
 	 *         sprite's pixels.
 	 * @throws IllegalArgumentException
-	 *             If the new width or the new height is less than or equal to
-	 *             0.
+	 *         If the new width or the new height is less than or equal to
+	 *         0.
 	 */
-	public int[] resizeBilinear(Sprite sprite, int newWidth, int newHeight) throws IllegalArgumentException {
+	public int[] resizeBilinear(Sprite sprite, int newWidth, int newHeight) throws IllegalArgumentException
+	{
 		return resizeBilinear(sprite, 0, 0, newWidth, newHeight);
 	}
 
@@ -962,23 +1046,24 @@ public class SpriteBatch {
 	 * new width or the new height cannot be less than or equal to 0.
 	 * 
 	 * @param sprite
-	 *            The original sprite to be resized.
+	 *        The original sprite to be resized.
 	 * @param startX
-	 *            The starting location on the x axis.
+	 *        The starting location on the x axis.
 	 * @param startY
-	 *            The starting location on the y axis
+	 *        The starting location on the y axis
 	 * @param newWidth
-	 *            The new sprite width.
+	 *        The new sprite width.
 	 * @param newHeight
-	 *            The new sprite height.
+	 *        The new sprite height.
 	 * @return The reference to the array of pixels containing the resized
 	 *         sprite's pixels.
 	 * @throws IllegalArgumentException
-	 *             If the new width or the new height is less than or equal to
-	 *             0.
+	 *         If the new width or the new height is less than or equal to
+	 *         0.
 	 */
 	public int[] resizeBilinear(Sprite sprite, int startX, int startY, int newWidth, int newHeight)
-			throws IllegalArgumentException {
+			throws IllegalArgumentException
+	{
 		if (newWidth <= 0 || newHeight <= 0)
 			throw new IllegalArgumentException("new width or new height cannot be less than or equal to 0");
 		int[] temp = new int[newWidth * newHeight];
@@ -991,8 +1076,10 @@ public class SpriteBatch {
 		float x_diff, y_diff, blue, red, green, alpha;
 		int offset = 0;
 
-		for (int i = startY; i < newHeight; i++) {
-			for (int j = startX; j < newWidth; j++) {
+		for (int i = startY; i < newHeight; i++)
+		{
+			for (int j = startX; j < newWidth; j++)
+			{
 				x = (int) (x_ratio * j);
 				y = (int) (y_ratio * i);
 				x_diff = (x_ratio * j) - x;
@@ -1036,18 +1123,19 @@ public class SpriteBatch {
 	 * to 0.
 	 * 
 	 * @param sprite
-	 *            The original sprite to be resized.
+	 *        The original sprite to be resized.
 	 * @param newWidth
-	 *            The new sprite width.
+	 *        The new sprite width.
 	 * @param newHeight
-	 *            The new sprite height.
+	 *        The new sprite height.
 	 * @return The reference array of pixels containing the resized sprite's
 	 *         pixels.
 	 * @throws IllegalArgumentException
-	 *             If the new width or the new height is less than or equal to
-	 *             0.
+	 *         If the new width or the new height is less than or equal to
+	 *         0.
 	 */
-	public int[] resizeNearestNeighbor(Sprite sprite, int newWidth, int newHeight) {
+	public int[] resizeNearestNeighbor(Sprite sprite, int newWidth, int newHeight)
+	{
 		return resizeNearestNeighbor(sprite, 0, 0, newWidth, newHeight);
 	}
 
@@ -1057,22 +1145,23 @@ public class SpriteBatch {
 	 * the new height cannot be less than or equal to 0.
 	 * 
 	 * @param sprite
-	 *            The original sprite to be resized.
+	 *        The original sprite to be resized.
 	 * @param startX
-	 *            The starting location on the x axis.
+	 *        The starting location on the x axis.
 	 * @param startY
-	 *            The starting location on the y axis.
+	 *        The starting location on the y axis.
 	 * @param newWidth
-	 *            The new sprite width.
+	 *        The new sprite width.
 	 * @param newHeight
-	 *            The new sprite height.
+	 *        The new sprite height.
 	 * @return The reference array of pixels containing the resized sprite's
 	 *         pixels.
 	 * @throws IllegalArgumentException
-	 *             If the new width or the new height is less than or equal to
-	 *             0.
+	 *         If the new width or the new height is less than or equal to
+	 *         0.
 	 */
-	public int[] resizeNearestNeighbor(Sprite sprite, int startX, int startY, int newWidth, int newHeight) {
+	public int[] resizeNearestNeighbor(Sprite sprite, int startX, int startY, int newWidth, int newHeight)
+	{
 		if (newWidth <= 0 || newHeight <= 0)
 			throw new IllegalArgumentException("new width or new height cannot be less than or equal to 0");
 		int[] temp = new int[newWidth * newHeight];
@@ -1081,16 +1170,20 @@ public class SpriteBatch {
 		float xRatio = (float) newWidth / (float) oldWidth;
 		float yRatio = (float) newHeight / (float) oldHeight;
 
-		for (int y = startY; y < newHeight; y++) {
-			for (int x = startX; x < newWidth; x++) {
+		for (int y = startY; y < newHeight; y++)
+		{
+			for (int x = startX; x < newWidth; x++)
+			{
 				temp[x + y * newWidth] = sprite.pixels[(int) (x / xRatio) + (int) (y / yRatio) * oldWidth];
 			}
 		}
 		return temp;
 	}
 
-	private void checkValidSprite(Sprite sprite) throws NullPointerException {
-		if (sprite == null) throw new NullPointerException("sprite is null");
+	private void checkValidSprite(Sprite sprite) throws NullPointerException
+	{
+		if (sprite == null)
+			throw new NullPointerException("sprite is null");
 	}
 
 	// ++++++++++ GETTERS ++++++++++ //
@@ -1100,7 +1193,8 @@ public class SpriteBatch {
 	 * 
 	 * @return The width of the screen.
 	 */
-	public int getScreenWidth() {
+	public int getScreenWidth()
+	{
 		return width;
 	}
 
@@ -1109,7 +1203,8 @@ public class SpriteBatch {
 	 * 
 	 * @return The height of the screen.
 	 */
-	public int getScreenHeight() {
+	public int getScreenHeight()
+	{
 		return height;
 	}
 }

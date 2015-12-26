@@ -7,8 +7,8 @@ import fiveHundred.rules.Bid;
 import gameCore.graphics.SpriteBatch;
 import gameCore.time.GameTime;
 
-public abstract class Player {
-
+public abstract class Player
+{
 	/**
 	 * Value indicating if it is this player's turn to play. Default value is
 	 * false.
@@ -33,7 +33,8 @@ public abstract class Player {
 	// TODO : Not sure if i'm going to use it this way
 	protected Bid bid;
 
-	public Player(String name) {
+	public Player(String name)
+	{
 		hand = new Hand();
 		tricksWon = 0;
 		score = 0;
@@ -47,7 +48,7 @@ public abstract class Player {
 	 * processed. Override this method with player-specific logic.
 	 * 
 	 * @param gameTime
-	 *            The Game's GameTime Object.
+	 *        The Game's GameTime Object.
 	 */
 	public abstract void update(GameTime gameTime);
 
@@ -56,7 +57,7 @@ public abstract class Player {
 	 * this method with player-specific rendering code.
 	 * 
 	 * @param spriteBatch
-	 *            A reference to the spriteBatch object that will paint a frame.
+	 *        A reference to the spriteBatch object that will paint a frame.
 	 */
 	public abstract void draw(SpriteBatch spriteBatch);
 
@@ -65,9 +66,8 @@ public abstract class Player {
 	 * method with player-specific code.
 	 * 
 	 * <p>
-	 * This method should play a card only at the appropriate time and if all
-	 * the specific conditions are true. If it cannot play a card, it should
-	 * return {@code null}.
+	 * This method should play a card only at the appropriate time and if all the specific
+	 * conditions are true. If it cannot play a card, it should return {@code null}.
 	 * 
 	 * @return The card played by that player or {@code null}.
 	 */
@@ -76,14 +76,16 @@ public abstract class Player {
 	/**
 	 * Adds one to this player's number of tricks won.
 	 */
-	public void addTrick() {
+	public void addTrick()
+	{
 		++tricksWon;
 	}
 
 	/**
 	 * Reset this player's number of tricks won to 0.
 	 */
-	public void clearTricksWon() {
+	public void clearTricksWon()
+	{
 		tricksWon = 0;
 	}
 
@@ -94,7 +96,8 @@ public abstract class Player {
 	 * 
 	 * @return this player's hand
 	 * */
-	public Hand getHand() {
+	public Hand getHand()
+	{
 		return hand;
 	}
 
@@ -103,7 +106,8 @@ public abstract class Player {
 	 * 
 	 * @return the number of tricks won.
 	 */
-	public int getTricksWon() {
+	public int getTricksWon()
+	{
 		return tricksWon;
 	}
 
@@ -112,7 +116,8 @@ public abstract class Player {
 	 * 
 	 * @return this player's score.
 	 */
-	public int getScore() {
+	public int getScore()
+	{
 		return score;
 	}
 
@@ -121,7 +126,8 @@ public abstract class Player {
 	 * 
 	 * @return this player's name.
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -130,7 +136,8 @@ public abstract class Player {
 	 * 
 	 * @return this player's bid.
 	 */
-	public Bid getBid() {
+	public Bid getBid()
+	{
 		return bid;
 	}
 
@@ -139,7 +146,8 @@ public abstract class Player {
 	 * 
 	 * @return true if this player have placed a bid.
 	 */
-	public boolean hasBid() {
+	public boolean hasBid()
+	{
 		return bid == null ? false : true;
 	}
 
@@ -148,7 +156,8 @@ public abstract class Player {
 	 * 
 	 * @return true if it's this player's turn.
 	 */
-	public boolean isYourTurn() {
+	public boolean isYourTurn()
+	{
 		return yourTurn;
 	}
 
@@ -159,9 +168,10 @@ public abstract class Player {
 	 * Set the bid to the specified value.
 	 * 
 	 * @param value
-	 *            the new value to be assigned to this variable.
+	 *        the new value to be assigned to this variable.
 	 */
-	public void setBid(Bid value) {
+	public void setBid(Bid value)
+	{
 		bid = value;
 	}
 
@@ -170,9 +180,10 @@ public abstract class Player {
 	 * Set yourTurn to the specified value.
 	 * 
 	 * @param value
-	 *            the new value to be assigned to this variable.
+	 *        the new value to be assigned to this variable.
 	 */
-	public void setYourTurn(boolean value) {
+	public void setYourTurn(boolean value)
+	{
 		yourTurn = value;
 	}
 }

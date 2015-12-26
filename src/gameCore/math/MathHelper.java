@@ -5,8 +5,8 @@ package gameCore.math;
  * 
  * @author Eric Perron (inspired by CardsFramework from Microsoft)
  */
-public final class MathHelper {
-
+public final class MathHelper
+{
 	/**
 	 * Represents the mathematical constant e(2.71828175).
 	 */
@@ -47,26 +47,27 @@ public final class MathHelper {
 	 * by a given triangle and two normalized barycentric (areal) coordinates.
 	 * 
 	 * @param value1
-	 *            The coordinate on one axis of vertex 1 of the defining
-	 *            triangle.
+	 *        The coordinate on one axis of vertex 1 of the defining
+	 *        triangle.
 	 * @param value2
-	 *            The coordinate on the same axis of vertex 2 of the defining
-	 *            triangle.
+	 *        The coordinate on the same axis of vertex 2 of the defining
+	 *        triangle.
 	 * @param value3
-	 *            The coordinate on the same axis of vertex 3 of the defining
-	 *            triangle.
+	 *        The coordinate on the same axis of vertex 3 of the defining
+	 *        triangle.
 	 * @param amount1
-	 *            The normalized barycentric (areal) coordinate b2, equal to the
-	 *            weighting factor for vertex 2, the coordinate of which is
-	 *            specified in value2.
+	 *        The normalized barycentric (areal) coordinate b2, equal to the
+	 *        weighting factor for vertex 2, the coordinate of which is
+	 *        specified in value2.
 	 * @param amount2
-	 *            The normalized barycentric (areal) coordinate b3, equal to the
-	 *            weighting factor for vertex 3, the coordinate of which is
-	 *            specified in value3.
+	 *        The normalized barycentric (areal) coordinate b3, equal to the
+	 *        weighting factor for vertex 3, the coordinate of which is
+	 *        specified in value3.
 	 * @return Cartesian coordinate of the specified point with respect to the
 	 *         axis being used.
 	 */
-	public static float barycentric(float value1, float value2, float value3, float amount1, float amount2) {
+	public static float barycentric(float value1, float value2, float value3, float amount1, float amount2)
+	{
 		return value1 + (value2 - value1) * amount1 + (value3 - value1) * amount2;
 	}
 
@@ -74,18 +75,19 @@ public final class MathHelper {
 	 * Performs a Catmull-Rom interpolation using the specified positions.
 	 * 
 	 * @param value1
-	 *            The first position in the interpolation.
+	 *        The first position in the interpolation.
 	 * @param value2
-	 *            The second position in the interpolation.
+	 *        The second position in the interpolation.
 	 * @param value3
-	 *            The third position in the interpolation.
+	 *        The third position in the interpolation.
 	 * @param value4
-	 *            The fourth position in the interpolation.
+	 *        The fourth position in the interpolation.
 	 * @param amount
-	 *            Weighting factor.
+	 *        Weighting factor.
 	 * @return A position that is the result of the Catmull-Rom interpolation.
 	 */
-	public static float catmullRom(float value1, float value2, float value3, float value4, float amount) {
+	public static float catmullRom(float value1, float value2, float value3, float value4, float amount)
+	{
 		// Using formula from http://www.mvps.org/directx/articles/catmull/
 		// Internally using doubles not to lose precission
 		double amountSquared = amount * amount;
@@ -100,16 +102,17 @@ public final class MathHelper {
 	 * Restricts a value to be within a specified range.
 	 * 
 	 * @param value
-	 *            The value to clamp.
+	 *        The value to clamp.
 	 * @param min
-	 *            The minimum value. If {@code value} is less than {@code min},
-	 *            {@code min} will be returned.
+	 *        The minimum value. If {@code value} is less than {@code min}, {@code min} will be
+	 *        returned.
 	 * @param max
-	 *            The maximum value. If {@code value} is greater than
-	 *            {@code max}, {@code max} will be returned.
+	 *        The maximum value. If {@code value} is greater than {@code max}, {@code max} will be
+	 *        returned.
 	 * @return The clamped value.
 	 */
-	public static float clamp(float value, float min, float max) {
+	public static float clamp(float value, float min, float max)
+	{
 		// First we check to see if we're greater than the max
 		value = (value > max) ? max : value;
 
@@ -124,16 +127,17 @@ public final class MathHelper {
 	 * Restricts a value to be within a specified range.
 	 * 
 	 * @param value
-	 *            The value to clamp.
+	 *        The value to clamp.
 	 * @param min
-	 *            The minimum value. If {@code value} is less than {@code min},
-	 *            {@code min} will be returned.
+	 *        The minimum value. If {@code value} is less than {@code min}, {@code min} will be
+	 *        returned.
 	 * @param max
-	 *            The maximum value. If {@code value} is greater than
-	 *            {@code max}, {@code max} will be returned.
+	 *        The maximum value. If {@code value} is greater than {@code max}, {@code max} will be
+	 *        returned.
 	 * @return The clamped value.
 	 */
-	public static int clamp(int value, int min, int max) {
+	public static int clamp(int value, int min, int max)
+	{
 		value = (value > max) ? max : value;
 		value = (value < min) ? min : value;
 		return value;
@@ -143,12 +147,13 @@ public final class MathHelper {
 	 * Calculates the absolute value of the difference of two values.
 	 * 
 	 * @param value1
-	 *            Source value.
+	 *        Source value.
 	 * @param value2
-	 *            Destination value.
+	 *        Destination value.
 	 * @return Distance between the two values.
 	 */
-	public static float distance(float value1, float value2) {
+	public static float distance(float value1, float value2)
+	{
 		return Math.abs(value1 - value2);
 	}
 
@@ -156,18 +161,19 @@ public final class MathHelper {
 	 * Performs a Hermite spline interpolation.
 	 * 
 	 * @param value1
-	 *            Source position.
+	 *        Source position.
 	 * @param tangent1
-	 *            Source tangent.
+	 *        Source tangent.
 	 * @param value2
-	 *            Source position.
+	 *        Source position.
 	 * @param tangent2
-	 *            Source tangent.
+	 *        Source tangent.
 	 * @param amount
-	 *            Weighting factor.
+	 *        Weighting factor.
 	 * @return The result of the Hermite spline interpolation.
 	 */
-	public static float hermite(float value1, float tangent1, float value2, float tangent2, float amount) {
+	public static float hermite(float value1, float tangent1, float value2, float tangent2, float amount)
+	{
 		// All transformed to double not to lose precission
 		// Otherwise, for high numbers of param:amount the result is NaN instead
 		// of Infinity
@@ -175,8 +181,10 @@ public final class MathHelper {
 		double sCubed = s * s * s;
 		double sSquared = s * s;
 
-		if (amount == 0f) result = value1;
-		else if (amount == 1f) result = value2;
+		if (amount == 0f)
+			result = value1;
+		else if (amount == 1f)
+			result = value2;
 		else
 			result = (2 * v1 - 2 * v2 + t2 + t1) * sCubed + (3 * v2 - 3 * v1 - 2 * t1 - t2) * sSquared + t1 * s + v1;
 		return (float) result;
@@ -186,20 +194,20 @@ public final class MathHelper {
 	 * Linearly interpolates between two values.
 	 * 
 	 * <p>
-	 * This method performs the linear interpolation based on the following
-	 * formula : {@code value1 + (value2 - value1) * amount} Passing amount a
-	 * value of 0 will cause value1 to be returned, a value of 1 will cause
-	 * value2 to be returned.
+	 * This method performs the linear interpolation based on the following formula :
+	 * {@code value1 + (value2 - value1) * amount} Passing amount a value of 0 will cause value1 to
+	 * be returned, a value of 1 will cause value2 to be returned.
 	 * 
 	 * @param value1
-	 *            Source value.
+	 *        Source value.
 	 * @param value2
-	 *            Source value.
+	 *        Source value.
 	 * @param amount
-	 *            Value between 0 and 1 indicating the weight of value2.
+	 *        Value between 0 and 1 indicating the weight of value2.
 	 * @return Interpolated value.
 	 */
-	public static float lerp(float value1, float value2, float amount) {
+	public static float lerp(float value1, float value2, float amount)
+	{
 		return value1 + (value2 - value1) * amount;
 	}
 
@@ -207,12 +215,13 @@ public final class MathHelper {
 	 * Returns the greater of two values.
 	 * 
 	 * @param value1
-	 *            Source value.
+	 *        Source value.
 	 * @param value2
-	 *            Source value.
+	 *        Source value.
 	 * @return The greater value.
 	 */
-	public static float max(float value1, float value2) {
+	public static float max(float value1, float value2)
+	{
 		return Math.max(value1, value2);
 	}
 
@@ -220,12 +229,13 @@ public final class MathHelper {
 	 * Returns the lesser of two values.
 	 * 
 	 * @param value1
-	 *            Source value.
+	 *        Source value.
 	 * @param value2
-	 *            Source value.
+	 *        Source value.
 	 * @return The lesser value.
 	 */
-	public static float min(float value1, float value2) {
+	public static float min(float value1, float value2)
+	{
 		return Math.min(value1, value2);
 	}
 
@@ -233,14 +243,15 @@ public final class MathHelper {
 	 * Interpolates between two values using a cubic equation.
 	 * 
 	 * @param value1
-	 *            Source value.
+	 *        Source value.
 	 * @param value2
-	 *            Source value.
+	 *        Source value.
 	 * @param amount
-	 *            Weighting value.
+	 *        Weighting value.
 	 * @return The interpolated value.
 	 */
-	public static float smoothStep(float value1, float value2, float amount) {
+	public static float smoothStep(float value1, float value2, float amount)
+	{
 		// It is expected that 0 < amount < 1
 		// If amount < 0, return value1
 		// If amount > 1, return value2
@@ -256,14 +267,15 @@ public final class MathHelper {
 	 * Converts radians to degrees.
 	 * 
 	 * <p>
-	 * This method uses double precision internally, though it returns single
-	 * float. Factor = 180 / pi.
+	 * This method uses double precision internally, though it returns single float. Factor = 180 /
+	 * pi.
 	 * 
 	 * @param radians
-	 *            The angle in radians.
+	 *        The angle in radians.
 	 * @return The angle in degrees.
 	 */
-	public static float toDegrees(float radians) {
+	public static float toDegrees(float radians)
+	{
 		return (float) (radians * 57.295779513082320876798154814105);
 	}
 
@@ -271,14 +283,15 @@ public final class MathHelper {
 	 * Converts degrees to radians.
 	 * 
 	 * <p>
-	 * This method uses double precision internally, though it returns single
-	 * float. Factor = pi / 180.
+	 * This method uses double precision internally, though it returns single float. Factor = pi /
+	 * 180.
 	 * 
 	 * @param degrees
-	 *            The angle in degrees.
+	 *        The angle in degrees.
 	 * @return The angle in radians.
 	 */
-	public static float toRadians(float degrees) {
+	public static float toRadians(float degrees)
+	{
 		return (float) (degrees * 0.017453292519943295769236907684886);
 	}
 
@@ -286,15 +299,20 @@ public final class MathHelper {
 	 * Reduces a given angle to a value between π and -π.
 	 * 
 	 * @param angle
-	 *            The angle to reduce, in radians.
+	 *        The angle to reduce, in radians.
 	 * @return The new angle, in radians.
 	 */
-	public static float wrapAngle(float angle) {
+	public static float wrapAngle(float angle)
+	{
 		angle = (float) Math.IEEEremainder((double) angle, 6.2831854820251465);
-		if (angle <= -3.14159274f) {
+		if (angle <= -3.14159274f)
+		{
 			angle += 6.28318548f;
-		} else {
-			if (angle > 3.14159274f) {
+		}
+		else
+		{
+			if (angle > 3.14159274f)
+			{
 				angle -= 6.28318548f;
 			}
 		}
@@ -305,11 +323,11 @@ public final class MathHelper {
 	 * Determines if value is powered by two.
 	 * 
 	 * @param value
-	 *            A value.
-	 * @return {@code true} if {@code value} is powered by two; otherwise
-	 *         {@code false}.
+	 *        A value.
+	 * @return {@code true} if {@code value} is powered by two; otherwise {@code false}.
 	 */
-	public static boolean isPowerOfTwo(int value) {
+	public static boolean isPowerOfTwo(int value)
+	{
 		return (value > 0) && ((value & (value - 1)) == 0);
 	}
 
@@ -317,18 +335,20 @@ public final class MathHelper {
 	 * Rotates a point around another specified point.
 	 * 
 	 * @param point
-	 *            The point to rotate.
+	 *        The point to rotate.
 	 * @param origin
-	 *            The rotation origin or "axis".
+	 *        The rotation origin or "axis".
 	 * @param rotation
-	 *            The rotation amount in radians.
+	 *        The rotation amount in radians.
 	 * @return The position of the point after rotating it.
 	 */
-	public static Vector2f rotateAboutOrigin(Vector2f point, Vector2f origin, float rotation) {
+	public static Vector2f rotateAboutOrigin(Vector2f point, Vector2f origin, float rotation)
+	{
 		// Point relative to origin
 		Vector2f u = new Vector2f(Vector2f.subtract(point, origin));
 
-		if (u == Vector2f.ZERO) return point;
+		if (u == Vector2f.ZERO)
+			return point;
 
 		// Angle relative to origin
 		float a = (float) Math.atan2(u.getY(), u.getX());

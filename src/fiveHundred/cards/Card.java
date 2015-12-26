@@ -13,8 +13,8 @@ import gameCore.graphics.Sprite;
  * different jokers.
  */
 
-public class Card {
-
+public class Card
+{
 	/* Codes for the 4 suits, plus Joker. */
 	public final static int CLUBS = 0;
 	public final static int DIAMONDS = 1;
@@ -78,25 +78,26 @@ public class Card {
 	 * Creates a card with a specified suit, value and sprite.
 	 * 
 	 * @param theValue
-	 *            The value of the new card. For a regular card (non-joker),
-	 *            the value must be in the range 1 through 13, with 1
-	 *            representing an Ace. You can use the constants Card.ACE,
-	 *            Card.JACK, Card.QUEEN, and Card.KING. For a Joker, the value
-	 *            can be anything.
+	 *        The value of the new card. For a regular card (non-joker),
+	 *        the value must be in the range 1 through 13, with 1
+	 *        representing an Ace. You can use the constants Card.ACE,
+	 *        Card.JACK, Card.QUEEN, and Card.KING. For a Joker, the value
+	 *        can be anything.
 	 * @param theSuit
-	 *            The suit of the new card. This must be one of the values
-	 *            Card.SPADES, Card.HEARTS, Card.DIAMONDS, Card.CLUBS, or
-	 *            Card.JOKER.
+	 *        The suit of the new card. This must be one of the values
+	 *        Card.SPADES, Card.HEARTS, Card.DIAMONDS, Card.CLUBS, or
+	 *        Card.JOKER.
 	 * @param theSprite
-	 *            The Sprite of the new card. This must be one of the values
-	 *            of the Sprite class : Sprite.clubAce, Sprite.heart2,
-	 *            Sprite.diamondJ, Sprite.spadeK, Sprite.firsJoker,
-	 *            Sprite.secondJoker, etc.
+	 *        The Sprite of the new card. This must be one of the values
+	 *        of the Sprite class : Sprite.clubAce, Sprite.heart2,
+	 *        Sprite.diamondJ, Sprite.spadeK, Sprite.firsJoker,
+	 *        Sprite.secondJoker, etc.
 	 * @throws IllegalArgumentException
-	 *             If the parameter values are not in the
-	 *             permissible ranges
+	 *         If the parameter values are not in the
+	 *         permissible ranges
 	 */
-	public Card(int theValue, int theSuit, Sprite theSprite) throws IllegalArgumentException {
+	public Card(int theValue, int theSuit, Sprite theSprite) throws IllegalArgumentException
+	{
 		if (theSuit != SPADES && theSuit != HEARTS && theSuit != DIAMONDS && theSuit != CLUBS && theSuit != JOKER)
 			throw new IllegalArgumentException("Illegal playing card suit");
 		if (theSuit != JOKER && (theValue < 1 || theValue > 14)) // ACE_HIGH =
@@ -115,7 +116,8 @@ public class Card {
 	 * @returns the suit, which is one of the constants Card.SPADES,
 	 *          Card.HEARTS, Card.DIAMONDS, Card.CLUBS, or Card.JOKER
 	 */
-	public int getSuit() {
+	public int getSuit()
+	{
 		return suit;
 	}
 
@@ -125,7 +127,8 @@ public class Card {
 	 * @return the value, which is one of the numbers 1 through 13, inclusive
 	 *         for a regular card, and which can be any value for a Joker.
 	 */
-	public int getValue() {
+	public int getValue()
+	{
 		return value;
 	}
 
@@ -134,7 +137,8 @@ public class Card {
 	 * 
 	 * @return the sprite of this card.
 	 */
-	public Sprite getSprite() {
+	public Sprite getSprite()
+	{
 		return sprite;
 	}
 
@@ -143,7 +147,8 @@ public class Card {
 	 * 
 	 * @return the x position of this card.
 	 */
-	public int getX() {
+	public int getX()
+	{
 		return x;
 	}
 
@@ -152,7 +157,8 @@ public class Card {
 	 * 
 	 * @return the y position of this card.
 	 */
-	public int getY() {
+	public int getY()
+	{
 		return y;
 	}
 
@@ -162,8 +168,10 @@ public class Card {
 	 * @return one of the strings "Spades", "Hearts", "Diamonds", "Clubs"
 	 *         or "Joker".
 	 */
-	public String getSuitAsString() {
-		switch (suit) {
+	public String getSuitAsString()
+	{
+		switch (suit)
+		{
 			case SPADES:
 				return "Spades";
 			case HEARTS:
@@ -184,10 +192,14 @@ public class Card {
 	 *         "3", ..., "10", "Jack", "Queen", or "King". For a Joker, the
 	 *         string is always numerical.
 	 */
-	public String getValueAsString() {
-		if (suit == JOKER) return "" + value;
-		else {
-			switch (value) {
+	public String getValueAsString()
+	{
+		if (suit == JOKER)
+			return "" + value;
+		else
+		{
+			switch (value)
+			{
 				case 1:
 					return "Ace";
 				case 2:
@@ -222,9 +234,10 @@ public class Card {
 	 * Sets the x position of a card
 	 * 
 	 * @param xPos
-	 *            in screen pixel
+	 *        in screen pixel
 	 */
-	public void setX(int xPos) {
+	public void setX(int xPos)
+	{
 		x = xPos;
 	}
 
@@ -232,9 +245,10 @@ public class Card {
 	 * Sets the y position of a card
 	 * 
 	 * @param yPos
-	 *            in screen pixel
+	 *        in screen pixel
 	 */
-	public void setY(int yPos) {
+	public void setY(int yPos)
+	{
 		y = yPos;
 	}
 
@@ -245,12 +259,16 @@ public class Card {
 	 * are: "Queen of Hearts", "10 of Diamonds", "Ace of Spades",
 	 * "Joker", "Joker #2"
 	 */
-	public String toString() {
-		if (suit == JOKER) {
-			if (value == 1) return "Joker";
+	public String toString()
+	{
+		if (suit == JOKER)
+		{
+			if (value == 1)
+				return "Joker";
 			else
 				return "Joker #" + value;
-		} else
+		}
+		else
 			return getValueAsString() + " of " + getSuitAsString();
 	}
 }

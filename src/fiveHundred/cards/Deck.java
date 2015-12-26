@@ -10,8 +10,8 @@ import java.util.List;
  * is a regular poker deck that contains 52 regular cards and that can
  * also optionally include two Jokers.
  */
-public class Deck {
-
+public class Deck
+{
 	/**
 	 * An array of cards. A 54-card deck contains two Jokers in addition to the
 	 * 52 cards of a regular poker deck.
@@ -50,7 +50,8 @@ public class Deck {
 	 * randomize the order. (Note that "new Deck()" is equivalent
 	 * to "new Deck(false)".)
 	 */
-	public Deck() {
+	public Deck()
+	{
 		this(NORMAL, false); // Just call the other constructor in this class.
 	}
 
@@ -64,29 +65,40 @@ public class Deck {
 	 * randomize the order.
 	 * 
 	 * @param typeOfDeck
-	 *            if NORMAL equals 52 cards, if CINQ_CENT equals 33 cards
-	 *            including one Joker. includeJokers is ignored.
+	 *        if NORMAL equals 52 cards, if CINQ_CENT equals 33 cards
+	 *        including one Joker. includeJokers is ignored.
 	 * @param includeJokers
-	 *            if true, two Jokers are included in the deck; if false,
-	 *            there are no Jokers in the deck.
+	 *        if true, two Jokers are included in the deck; if false,
+	 *        there are no Jokers in the deck.
 	 */
-	public Deck(int typeOfDeck, boolean includeJokers) {
-		if (includeJokers) deck = new Card[54];
-		else if (typeOfDeck == NORMAL) deck = new Card[52];
-		else if (typeOfDeck == CINQ_CENT) deck = new Card[33];
+	public Deck(int typeOfDeck, boolean includeJokers)
+	{
+		if (includeJokers)
+			deck = new Card[54];
+		else if (typeOfDeck == NORMAL)
+			deck = new Card[52];
+		else if (typeOfDeck == CINQ_CENT)
+			deck = new Card[33];
 
 		int cardCount = 0; // How many cards have been created so far.
 
-		if (typeOfDeck == NORMAL) {
-			for (int suit = 0; suit <= 3; suit++) {
-				for (int value = 1; value <= 13; value++) {
+		if (typeOfDeck == NORMAL)
+		{
+			for (int suit = 0; suit <= 3; suit++)
+			{
+				for (int value = 1; value <= 13; value++)
+				{
 					deck[cardCount] = new Card(value, suit, spriteList.get(value - 1 + suit * 13));
 					cardCount++;
 				}
 			}
-		} else if (typeOfDeck == CINQ_CENT) {
-			for (int suit = 0; suit <= 3; suit++) {
-				for (int value = 7; value <= 13; value++) {
+		}
+		else if (typeOfDeck == CINQ_CENT)
+		{
+			for (int suit = 0; suit <= 3; suit++)
+			{
+				for (int value = 7; value <= 13; value++)
+				{
 					deck[cardCount] = new Card(value, suit, spriteList.get(value - 1 + suit * 13));
 					cardCount++;
 				}
@@ -98,7 +110,8 @@ public class Deck {
 			deck[32] = new Card(20, Card.JOKER, Sprite.firstJoker);
 		}
 
-		if (includeJokers) {
+		if (includeJokers)
+		{
 			deck[52] = new Card(1, Card.JOKER, Sprite.firstJoker);
 			deck[53] = new Card(2, Card.JOKER, Sprite.secondJoker);
 		}
@@ -110,8 +123,10 @@ public class Deck {
 	 * Put all the used cards back into the deck (if any), and
 	 * shuffle the deck into a random order.
 	 */
-	public void shuffle() {
-		for (int i = deck.length - 1; i > 0; i--) {
+	public void shuffle()
+	{
+		for (int i = deck.length - 1; i > 0; i--)
+		{
 			int rand = (int) (Math.random() * (i + 1));
 			Card temp = deck[i];
 			deck[i] = deck[rand];
@@ -129,7 +144,8 @@ public class Deck {
 	 * shuffled. It decreases by 1 each time the dealCard() method
 	 * is called.
 	 */
-	public int cardsLeft() {
+	public int cardsLeft()
+	{
 		return deck.length - cardsUsed;
 	}
 
@@ -140,10 +156,12 @@ public class Deck {
 	 * 
 	 * @return the card which is removed from the deck.
 	 * @throws IllegalStateException
-	 *             if there are no cards left in the deck
+	 *         if there are no cards left in the deck
 	 */
-	public Card dealCard() {
-		if (cardsUsed == deck.length) throw new IllegalStateException("No cards are left in the deck.");
+	public Card dealCard()
+	{
+		if (cardsUsed == deck.length)
+			throw new IllegalStateException("No cards are left in the deck.");
 		cardsUsed++;
 		return deck[cardsUsed - 1];
 		// Programming note: Cards are not literally removed from the array
@@ -158,7 +176,8 @@ public class Deck {
 	 *         if
 	 *         this is a 52 card deck that contains no jokers.
 	 */
-	public boolean hasJokers() {
+	public boolean hasJokers()
+	{
 		return (deck.length == 54);
 	}
 }

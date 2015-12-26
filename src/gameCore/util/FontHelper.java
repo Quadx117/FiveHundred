@@ -12,23 +12,24 @@ import java.awt.Graphics;
  * 
  * @author Eric Perron
  */
-public class FontHelper {
-
+public class FontHelper
+{
 	/**
 	 * Returns the width and height of a string as a Vector2i when rendered in
 	 * the specified font. The {@code Graphics} is needed to access some of the
 	 * methods we use here to get the font metrics.
 	 * 
 	 * @param text
-	 *            The string to measure.
+	 *        The string to measure.
 	 * @param font
-	 *            The font that this text will be rendered in.
+	 *        The font that this text will be rendered in.
 	 * @param g
-	 *            The {@code Graphics} object used for rendering.
+	 *        The {@code Graphics} object used for rendering.
 	 * @return The width and height, in pixels, of text when rendered in the
 	 *         specified font.
 	 */
-	public static Vector2i measureString(String text, Font font, Graphics g) {
+	public static Vector2i measureString(String text, Font font, Graphics g)
+	{
 		Vector2i size = new Vector2i();
 		int width = g.getFontMetrics(font).stringWidth(text);
 		int height = g.getFontMetrics(font).getHeight();

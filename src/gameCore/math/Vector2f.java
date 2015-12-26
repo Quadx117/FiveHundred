@@ -6,8 +6,8 @@ package gameCore.math;
  * @author Eric Perron (inspired by XNA Framework from Microsoft)
  * 
  */
-public class Vector2f {
-
+public class Vector2f
+{
 	// TODO : Do I keep those private static fields
 	private static final Vector2f zeroVector = new Vector2f(0.0f, 0.0f);
 	private static final Vector2f unitVector = new Vector2f(1.0f, 1.0f);
@@ -50,7 +50,8 @@ public class Vector2f {
 	 * Initializes a new instance of Vector2f with both of its component set to
 	 * 0.0f.
 	 */
-	public Vector2f() {
+	public Vector2f()
+	{
 		x = y = 0.0f;
 	}
 
@@ -59,9 +60,10 @@ public class Vector2f {
 	 * the specified value.
 	 * 
 	 * @param value
-	 *            The value to initialize both components to.
+	 *        The value to initialize both components to.
 	 */
-	public Vector2f(float value) {
+	public Vector2f(float value)
+	{
 		this.x = value;
 		this.y = value;
 	}
@@ -71,11 +73,12 @@ public class Vector2f {
 	 * specified values.
 	 * 
 	 * @param x
-	 *            Initial value for the x-component of the vector.
+	 *        Initial value for the x-component of the vector.
 	 * @param y
-	 *            Initial value for the y-component of the vector.
+	 *        Initial value for the y-component of the vector.
 	 */
-	public Vector2f(float x, float y) {
+	public Vector2f(float x, float y)
+	{
 		this.x = x;
 		this.y = y;
 	}
@@ -85,80 +88,95 @@ public class Vector2f {
 	 * the same values as the specified vector.
 	 * 
 	 * @param vector
-	 *            The vector used to set the components of this vector.
+	 *        The vector used to set the components of this vector.
 	 */
-	public Vector2f(Vector2f vector) {
+	public Vector2f(Vector2f vector)
+	{
 		this.x = vector.getX();
 		this.y = vector.getY();
 	}
 
 	// TODO : Finish comments and add missing methods
-	public Vector2f add(Vector2f other) {
+	public Vector2f add(Vector2f other)
+	{
 		this.x += other.x;
 		this.y += other.y;
 		return this;
 	}
 
-	public Vector2f add(float value) {
+	public Vector2f add(float value)
+	{
 		this.x += value;
 		this.y += value;
 		return this;
 	}
 
-	public Vector2f subtract(Vector2f other) {
+	public Vector2f subtract(Vector2f other)
+	{
 		this.x -= other.x;
 		this.y -= other.y;
 		return this;
 	}
 
-	public Vector2f subtract(float value) {
+	public Vector2f subtract(float value)
+	{
 		this.x -= value;
 		this.y -= value;
 		return this;
 	}
 
-	public Vector2f multiply(Vector2f other) {
+	public Vector2f multiply(Vector2f other)
+	{
 		this.x *= other.x;
 		this.y *= other.y;
 		return this;
 	}
 
-	public Vector2f multiply(float value) {
+	public Vector2f multiply(float value)
+	{
 		this.x *= value;
 		this.y *= value;
 		return this;
 	}
 
-	public Vector2f divide(Vector2f other) throws IllegalArgumentException {
-		if (other.x == 0 || other.y == 0) throw new IllegalArgumentException("Cannot divide by zero");
+	public Vector2f divide(Vector2f other) throws IllegalArgumentException
+	{
+		if (other.x == 0 || other.y == 0)
+			throw new IllegalArgumentException("Cannot divide by zero");
 		this.x /= other.x;
 		this.y /= other.y;
 		return this;
 	}
 
-	public Vector2f divide(float value) throws IllegalArgumentException {
-		if (value == 0) throw new IllegalArgumentException("Cannot divide by zero");
+	public Vector2f divide(float value) throws IllegalArgumentException
+	{
+		if (value == 0)
+			throw new IllegalArgumentException("Cannot divide by zero");
 		this.x /= value;
 		this.y /= value;
 		return this;
 	}
 
-	public float length() {
+	public float length()
+	{
 		return (float) Math.sqrt(x * x + y * y);
 	}
 
-	public float dotProduct(Vector2f other) {
+	public float dotProduct(Vector2f other)
+	{
 		return x * other.getX() + y * other.getY();
 	}
 
-	public Vector2f normalize() {
+	public Vector2f normalize()
+	{
 		float length = length();
 		x /= length;
 		y /= length;
 		return this;
 	}
 
-	public Vector2f rotate(float angle) {
+	public Vector2f rotate(float angle)
+	{
 		double rad = Math.toRadians(angle);
 		double cos = Math.cos(rad);
 		double sin = Math.sin(rad);
@@ -166,28 +184,35 @@ public class Vector2f {
 		return new Vector2f((float) (x * cos - y * sin), (float) (x * sin + y * cos));
 	}
 
-	public boolean equals(Object object) {
-		if (!(object instanceof Vector2f)) return false;
+	public boolean equals(Object object)
+	{
+		if (!(object instanceof Vector2f))
+			return false;
 		Vector2f vec = (Vector2f) object;
-		if (vec.getX() == this.getX() && vec.getY() == this.getY()) return true;
+		if (vec.getX() == this.getX() && vec.getY() == this.getY())
+			return true;
 		return false;
 	}
 
 	// ++++++++++ Static methods ++++++++++ //
 
-	public static Vector2f add(Vector2f v0, Vector2f v1) {
+	public static Vector2f add(Vector2f v0, Vector2f v1)
+	{
 		return new Vector2f(v0.getX() + v1.getX(), v0.getY() + v1.getY());
 	}
 
-	public static Vector2f subtract(Vector2f v0, Vector2f v1) {
+	public static Vector2f subtract(Vector2f v0, Vector2f v1)
+	{
 		return new Vector2f(v0.getX() - v1.getX(), v0.getY() - v1.getY());
 	}
 
-	public static Vector2f multiply(Vector2f vector, float value) {
+	public static Vector2f multiply(Vector2f vector, float value)
+	{
 		return new Vector2f((float) (vector.getX() * value), (float) (vector.getY() * value));
 	}
 
-	public static Vector2f divide(Vector2f vector, float value) {
+	public static Vector2f divide(Vector2f vector, float value)
+	{
 		return new Vector2f((float) (vector.getX() / value), (float) (vector.getY() / value));
 	}
 
@@ -197,7 +222,8 @@ public class Vector2f {
 	 * 
 	 * @return
 	 */
-	public float getX() {
+	public float getX()
+	{
 		return x;
 	}
 
@@ -205,7 +231,8 @@ public class Vector2f {
 	 * 
 	 * @return
 	 */
-	public float getY() {
+	public float getY()
+	{
 		return y;
 	}
 
@@ -215,7 +242,8 @@ public class Vector2f {
 	 * 
 	 * @param x
 	 */
-	public void setX(float x) {
+	public void setX(float x)
+	{
 		this.x = x;
 	}
 
@@ -223,7 +251,8 @@ public class Vector2f {
 	 * 
 	 * @param y
 	 */
-	public void setY(float y) {
+	public void setY(float y)
+	{
 		this.y = y;
 	}
 
@@ -231,7 +260,8 @@ public class Vector2f {
 	 * 
 	 * @param vector2f
 	 */
-	public void set(Vector2f vector2f) {
+	public void set(Vector2f vector2f)
+	{
 		set(vector2f.x, vector2f.y);
 	}
 
@@ -240,7 +270,8 @@ public class Vector2f {
 	 * @param x
 	 * @param y
 	 */
-	public void set(float x, float y) {
+	public void set(float x, float y)
+	{
 		this.x = x;
 		this.y = y;
 	}
@@ -249,7 +280,8 @@ public class Vector2f {
 	 * 
 	 */
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "(" + x + ", " + y + ")";
 	}
 }

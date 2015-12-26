@@ -5,8 +5,8 @@ package gameCore.input;
  * or moving. GameActions can be mapped to keys or the mouse with the
  * InputManager.
  */
-public class GameAction {
-
+public class GameAction
+{
 	/**
 	 * Normal behavior. The isPressed() method returns true as long as the key
 	 * is held down.
@@ -34,7 +34,8 @@ public class GameAction {
 	 * 
 	 * @param name
 	 */
-	public GameAction(String name) {
+	public GameAction(String name)
+	{
 		this(name, NORMAL);
 	}
 
@@ -44,7 +45,8 @@ public class GameAction {
 	 * @param name
 	 * @param behavior
 	 */
-	public GameAction(String name, int behavior) {
+	public GameAction(String name, int behavior)
+	{
 		this.name = name;
 		this.behavior = behavior;
 		reset();
@@ -53,7 +55,8 @@ public class GameAction {
 	/**
 	 * Gets the name of this GameAction.
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -61,7 +64,8 @@ public class GameAction {
 	 * Resets this GameAction so that it appears like it hasn't
 	 * been pressed.
 	 */
-	public void reset() {
+	public void reset()
+	{
 		state = STATE_RELEASED;
 		amount = 0;
 	}
@@ -70,7 +74,8 @@ public class GameAction {
 	 * Taps this GameAction. Same as calling press() followed
 	 * by release().
 	 */
-	public synchronized void tap() {
+	public synchronized void tap()
+	{
 		press();
 		release();
 	}
@@ -78,7 +83,8 @@ public class GameAction {
 	/**
 	 * Signals that the key was pressed.
 	 */
-	public synchronized void press() {
+	public synchronized void press()
+	{
 		press(1);
 	}
 
@@ -86,8 +92,10 @@ public class GameAction {
 	 * Signals that the key was pressed a specified number of
 	 * times, or that the mouse moved a specified distance.
 	 */
-	public synchronized void press(int amount) {
-		if (state != STATE_WAITING_FOR_RELEASE) {
+	public synchronized void press(int amount)
+	{
+		if (state != STATE_WAITING_FOR_RELEASE)
+		{
 			this.amount += amount;
 			state = STATE_PRESSED;
 		}
@@ -96,7 +104,8 @@ public class GameAction {
 	/**
 	 * Signals that the key was released
 	 */
-	public synchronized void release() {
+	public synchronized void release()
+	{
 		state = STATE_RELEASED;
 	}
 
@@ -104,7 +113,8 @@ public class GameAction {
 	 * Returns whether the key was pressed or not since last
 	 * checked.
 	 */
-	public synchronized boolean isPressed() {
+	public synchronized boolean isPressed()
+	{
 		return (getAmount() != 0);
 	}
 
@@ -113,12 +123,17 @@ public class GameAction {
 	 * pressed since it was last checked.
 	 * For mouse movement, this is the distance moved.
 	 */
-	public synchronized int getAmount() {
+	public synchronized int getAmount()
+	{
 		int retVal = amount;
-		if (retVal != 0) {
-			if (state == STATE_RELEASED) {
+		if (retVal != 0)
+		{
+			if (state == STATE_RELEASED)
+			{
 				amount = 0;
-			} else if (behavior == DETECT_INITAL_PRESS_ONLY) {
+			}
+			else if (behavior == DETECT_INITAL_PRESS_ONLY)
+			{
 				state = STATE_WAITING_FOR_RELEASE;
 				amount = 0;
 			}

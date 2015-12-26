@@ -5,19 +5,18 @@ package gameCore.time;
  * measure elapsed time. This class uses high-resolution performance counter.
  * 
  * <p>
- * Conceals use of {@code System.nanoTime()}, improving the readability of
- * application code and reducing the likelihood of calculation errors.
+ * Conceals use of {@code System.nanoTime()}, improving the readability of application code and
+ * reducing the likelihood of calculation errors.
  * 
  * <p>
- * Note that this object is not designed to be thread-safe and does not use
- * synchronization.
+ * Note that this object is not designed to be thread-safe and does not use synchronization.
  * 
  * <p>
- * We use a tick count of 100 nanoseconds to extend the length that can be
- * stored in a long variable while keeping enough precision. TimeSpan is also
- * configured with a 100 tick count.
+ * We use a tick count of 100 nanoseconds to extend the length that can be stored in a long variable
+ * while keeping enough precision. TimeSpan is also configured with a 100 tick count.
  */
-public class Stopwatch {
+public class Stopwatch
+{
 	// 100 nanoseconds per tick.
 	private final long NANOSECONDS_PER_TICK = 100L;
 	// 1000000 nanoseconds per millisecond.
@@ -27,32 +26,42 @@ public class Stopwatch {
 	private long startTimeStamp;
 	private boolean isRunning;
 
-	public Stopwatch() {
+	public Stopwatch()
+	{
 		reset();
 	}
 
-	public void start() {
+	public void start()
+	{
 		// Calling start on a running Stopwatch throws an error.
-		if (isRunning) {
+		if (isRunning)
+		{
 			throw new IllegalStateException("Can't start StopWatch: it's already running");
-		} else {
+		}
+		else
+		{
 			startTimeStamp = System.nanoTime();
 			isRunning = true;
 		}
 	}
 
 	/** Creates a new instance of this class and starts the Stopwatch */
-	public static Stopwatch startNew() {
+	public static Stopwatch startNew()
+	{
 		Stopwatch s = new Stopwatch();
 		s.start();
 		return s;
 	}
 
-	public void stop() {
+	public void stop()
+	{
 		// Calling stop on a stopped Stopwatch throws an error.
-		if (!isRunning) {
+		if (!isRunning)
+		{
 			throw new IllegalStateException("Can't stop StopWatch: it's not running");
-		} else {
+		}
+		else
+		{
 			long endTimeStamp = System.nanoTime();
 			long elapsedThisPeriod = endTimeStamp - startTimeStamp;
 			elapsedNanoSeconds += elapsedThisPeriod;
@@ -60,14 +69,16 @@ public class Stopwatch {
 		}
 	}
 
-	public void reset() {
+	public void reset()
+	{
 		elapsedNanoSeconds = 0;
 		isRunning = false;
 		startTimeStamp = 0;
 	}
 
 	// ++++++++++ GETTERS ++++++++++ //
-	public boolean isRunning() {
+	public boolean isRunning()
+	{
 		return isRunning;
 	}
 
@@ -78,7 +89,8 @@ public class Stopwatch {
 	 * @return a {@code TimeSpan} representing the elapsed time since the last
 	 *         start time.
 	 */
-	public TimeSpan getElapsed() {
+	public TimeSpan getElapsed()
+	{
 		return new TimeSpan(getElapsedTicks());
 	}
 
@@ -88,7 +100,8 @@ public class Stopwatch {
 	 * 
 	 * @return the number of elapsed ticks since the last start time.
 	 */
-	public long getElapsedTicks() {
+	public long getElapsedTicks()
+	{
 		return getElapsedNanoseconds() / NANOSECONDS_PER_TICK;
 	}
 
@@ -99,7 +112,8 @@ public class Stopwatch {
 	 * @return the number of elapsed milliseconds since the last start time.
 	 */
 
-	public long getElapsedMilliseconds() {
+	public long getElapsedMilliseconds()
+	{
 		return getElapsedNanoseconds() / NANOS_PER_MILLISECOND;
 	}
 
@@ -109,10 +123,12 @@ public class Stopwatch {
 	 * 
 	 * @return the number of elapsed nanoseconds since the last start time.
 	 */
-	public long getElapsedNanoseconds() {
+	public long getElapsedNanoseconds()
+	{
 		long elapsedNanos = elapsedNanoSeconds;
 
-		if (isRunning) {
+		if (isRunning)
+		{
 			// If the StopWatch is running, add elapsed time since the Stopwatch
 			// last started time.
 			long currentTimeStamp = System.nanoTime();

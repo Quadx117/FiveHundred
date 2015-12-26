@@ -3,8 +3,8 @@ package fiveHundred;
 import gameCore.time.GameTime;
 import gameCore.time.TimeSpan;
 
-public class FPS_Counter {
-
+public class FPS_Counter
+{
 	private int frameRate;
 	private int frameCounter;
 	private int updateRate;
@@ -12,7 +12,8 @@ public class FPS_Counter {
 	private TimeSpan elapsedTime;
 	private Game game;
 
-	public FPS_Counter(Game game) {
+	public FPS_Counter(Game game)
+	{
 		this.game = game;
 		frameRate = 0;
 		updateRate = 0;
@@ -21,11 +22,14 @@ public class FPS_Counter {
 		elapsedTime = new TimeSpan(TimeSpan.ZERO);
 	}
 
-	public void update(GameTime gameTime) {
+	public void update(GameTime gameTime)
+	{
 		updateCounter++;
-		try {
+		try
+		{
 			elapsedTime.add(gameTime.getElapsedGameTime());
-			if (elapsedTime.getTicks() > TimeSpan.fromSeconds(1).getTicks()) {
+			if (elapsedTime.getTicks() > TimeSpan.fromSeconds(1).getTicks())
+			{
 				elapsedTime.subtract(TimeSpan.fromSeconds(1));
 				frameRate = frameCounter;
 				updateRate = updateCounter;
@@ -33,13 +37,16 @@ public class FPS_Counter {
 				updateCounter = 0;
 				game.getFrame().setTitle(game.getTitle() + "  |  " + updateRate + " ups, " + frameRate + " fps");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void draw(GameTime gameTime) {
+	public void draw(GameTime gameTime)
+	{
 		frameCounter++;
 
 	}
