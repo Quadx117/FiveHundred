@@ -7,6 +7,7 @@ package fiveHundred.cards;
  */
 
 import java.util.ArrayList;
+import java.util.function.BiPredicate;
 
 import fiveHundred.Game;
 
@@ -101,29 +102,29 @@ public class Hand
 	}
 
 	/**
-	 * Sorts the cards in the hand so that cards of the same suit are
-	 * grouped together, and within a suit the cards are sorted by value.
-	 * Note that aces are sorted according to their value. ACE_HIGH = 14
-	 * and ACE_LOW = 1;
+	 * Sorts the cards in the hand using the supplied comparing function.
+	 * 
+	 * @param cardComparator
+	 *        The function used to compare to cards.
 	 */
-	public void sortBySuit()
+	public void sort(BiPredicate<Card, Card> cardComparator)
 	{
 		ArrayList<Card> newHand = new ArrayList<Card>();
 		while (hand.size() > 0)
 		{
 			int posMin = 0; // Position of minimal card.
-			Card c = (Card) hand.get(0); // Minimal card.
+			Card c2 = (Card) hand.get(0); // Minimal card.
 			for (int i = 1; i < hand.size(); i++)
 			{
 				Card c1 = (Card) hand.get(i);
-				if (c1.getSuit() < c.getSuit() || (c1.getSuit() == c.getSuit() && c1.getValue() < c.getValue()))
+				if (cardComparator.test(c1, c2))
 				{
 					posMin = i;
-					c = c1;
+					c2 = c1;
 				}
 			}
 			hand.remove(posMin);
-			newHand.add(c);
+			newHand.add(c2);
 		}
 		hand = newHand;
 	}
