@@ -18,32 +18,32 @@ import fiveHundred.cards.Card;
  */
 public enum Bid
 {
-	PASS("Pass", Trump.NO_TRUMP, 0), 					//
-	_6_PIQUES("6 Piques", Trump.SPADES, 40), 			//
-	_6_TREFLES("6 Trèfles", Trump.CLUBS, 60),			//
-	_6_CARREAU("6 Carreau", Trump.DIAMONDS, 80),		//
-	_6_COEUR("6 Coeurs", Trump.HEARTS, 100),			//
-	_6_SANS("6 Sans Atout", Trump.NO_TRUMP, 120),		//
-	_7_PIQUES("7 Piques", Trump.SPADES, 140),			//
-	_7_TREFLES("7 Trèfles", Trump.CLUBS, 160),			//
-	_7_CARREAU("7 Carreau", Trump.DIAMONDS, 180),		//
-	_7_COEUR("7 Coeurs", Trump.HEARTS, 200),			//
-	_7_SANS("7 Sans Atout", Trump.NO_TRUMP, 220),		//
-	_8_PIQUES("8 Piques", Trump.SPADES, 240),			//
-	_8_TREFLES("8 Trèfles", Trump.CLUBS, 260),			//
-	_8_CARREAU("8 Carreau", Trump.DIAMONDS, 280),		//
-	_8_COEUR("8 Coeurs", Trump.HEARTS, 300),			//
-	_8_SANS("8 Sans Atout", Trump.NO_TRUMP, 320),		//
-	_9_PIQUES("9 Piques", Trump.SPADES, 340),			//
-	_9_TREFLES("9 Trèfles", Trump.CLUBS, 360),			//
-	_9_CARREAU("9 Carreau", Trump.DIAMONDS, 380),		//
-	_9_COEUR("9 Coeurs", Trump.HEARTS, 400),			//
-	_9_SANS("9 Sans Atout", Trump.NO_TRUMP, 420),		//
-	_10_PIQUES("10 Piques", Trump.SPADES, 440),			//
-	_10_TREFLES("10 Trèfles", Trump.CLUBS, 460),		//
-	_10_CARREAU("10 Carreau", Trump.DIAMONDS, 480),		//
-	_10_COEUR("10 Coeurs", Trump.HEARTS, 500),			//
-	_10_SANS("10 Sans Atout", Trump.NO_TRUMP, 520);
+	PASS("Pass", Trump.NO_TRUMP, -1, -1, 0),
+	_6_PIQUES("6 Piques", Trump.SPADES, Card.SPADES, Card.CLUBS, 40),
+	_6_TREFLES("6 Trèfles", Trump.CLUBS, Card.CLUBS, Card.SPADES, 60),
+	_6_CARREAU("6 Carreau", Trump.DIAMONDS, Card.DIAMONDS, Card.HEARTS, 80),
+	_6_COEUR("6 Coeurs", Trump.HEARTS, Card.HEARTS, Card.DIAMONDS, 100),
+	_6_SANS("6 Sans Atout", Trump.NO_TRUMP, -1, -1, 120),
+	_7_PIQUES("7 Piques", Trump.SPADES, Card.SPADES, Card.CLUBS, 140),
+	_7_TREFLES("7 Trèfles", Trump.CLUBS, Card.CLUBS, Card.SPADES, 160),
+	_7_CARREAU("7 Carreau", Trump.DIAMONDS, Card.DIAMONDS, Card.HEARTS, 180),
+	_7_COEUR("7 Coeurs", Trump.HEARTS, Card.HEARTS, Card.DIAMONDS, 200),
+	_7_SANS("7 Sans Atout", Trump.NO_TRUMP, -1, -1, 220),
+	_8_PIQUES("8 Piques", Trump.SPADES, Card.SPADES, Card.CLUBS, 240),
+	_8_TREFLES("8 Trèfles", Trump.CLUBS, Card.CLUBS, Card.SPADES, 260),
+	_8_CARREAU("8 Carreau", Trump.DIAMONDS, Card.DIAMONDS, Card.HEARTS, 280),
+	_8_COEUR("8 Coeurs", Trump.HEARTS, Card.HEARTS, Card.DIAMONDS, 300),
+	_8_SANS("8 Sans Atout", Trump.NO_TRUMP, -1, -1, 320),
+	_9_PIQUES("9 Piques", Trump.SPADES, Card.SPADES, Card.CLUBS, 340),
+	_9_TREFLES("9 Trèfles", Trump.CLUBS, Card.CLUBS, Card.SPADES, 360),
+	_9_CARREAU("9 Carreau", Trump.DIAMONDS, Card.DIAMONDS, Card.HEARTS, 380),
+	_9_COEUR("9 Coeurs", Trump.HEARTS, Card.HEARTS, Card.DIAMONDS, 400),
+	_9_SANS("9 Sans Atout", Trump.NO_TRUMP, -1, -1, 420),
+	_10_PIQUES("10 Piques", Trump.SPADES, Card.SPADES, Card.CLUBS, 440),
+	_10_TREFLES("10 Trèfles", Trump.CLUBS, Card.CLUBS, Card.SPADES, 460),
+	_10_CARREAU("10 Carreau", Trump.DIAMONDS, Card.DIAMONDS, Card.HEARTS, 480),
+	_10_COEUR("10 Coeurs", Trump.HEARTS, Card.HEARTS, Card.DIAMONDS, 500),
+	_10_SANS("10 Sans Atout", Trump.NO_TRUMP, -1, -1, 520);
 
 	/**
 	 * The enumeration of the different trumps available.
@@ -59,7 +59,7 @@ public enum Bid
 	private String name;
 
 	/**
-	 * The trump this bid. Enables us to adjust the cards value according to the
+	 * The trump for this bid. Enables us to adjust the cards value according to the
 	 * trump of the highest bid.
 	 */
 	private Trump trump;
@@ -77,6 +77,16 @@ public enum Bid
 	private int trumpSuit;
 
 	/**
+	 * If this bid has a trump, this is the Jack of the same suit.
+	 */
+	private int leftBower;
+
+	/**
+	 * If this bid has a trump, this is the Jack of the suit of the same color.
+	 */
+	private int rightBower;
+
+	/**
 	 * Initializes a new instance of the Bid object with the specified values.
 	 * 
 	 * @param name
@@ -86,11 +96,13 @@ public enum Bid
 	 * @param scoreValue
 	 *        The scoreValue of this bid.
 	 */
-	private Bid(String name, Trump trump, int scoreValue)
+	private Bid(String name, Trump trump, int leftBower, int rightBower, int scoreValue)
 	{
 		this.name = name;
 		this.trump = trump;
 		this.scoreValue = scoreValue;
+		this.leftBower = leftBower;
+		this.rightBower = rightBower;
 
 		trumpSuit = -1;
 		if (trump.name().equals(Trump.CLUBS.name()))
@@ -131,6 +143,26 @@ public enum Bid
 	public Trump getTrump()
 	{
 		return trump;
+	}
+
+	/**
+	 * Return the suit of the left bower for this Bid.
+	 * 
+	 * @return the trump of this Bid.
+	 */
+	public int getLeftBower()
+	{
+		return leftBower;
+	}
+
+	/**
+	 * Return the suit of the right bower for this Bid.
+	 * 
+	 * @return the trump of this Bid.
+	 */
+	public int getRightBower()
+	{
+		return rightBower;
 	}
 
 	/**
