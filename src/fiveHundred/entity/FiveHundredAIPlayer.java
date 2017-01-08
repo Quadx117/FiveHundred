@@ -64,11 +64,11 @@ public class FiveHundredAIPlayer extends Player
 			Card firstCardPlayed = game.getGameTable().getCardsOnTable().get(game.getFirstCardPlayed());
 			for (int i = 0; i < hand.getCardCount(); ++i)
 			{
-				if (hand.getCard(i).getSuit() == firstCardPlayed.getSuit())
+				if (game.getCardSuit(hand.getCard(i)) == game.getCardSuit(firstCardPlayed))
 				{
 					sameSuitCards.add(i);
 				}
-				else if (hand.getCard(i).getSuit() == game.getHighestBid().getTrumpSuit())
+				else if (game.getCardSuit(hand.getCard(i)) == game.getHighestBid().getTrumpSuit())
 				{
 					trumpSuitCards.add(i);
 				}
@@ -78,7 +78,7 @@ public class FiveHundredAIPlayer extends Player
 					{
 						lowestOverallCard = i;
 					}
-					else if (hand.getCard(i).getValue() < hand.getCard(lowestOverallCard).getValue())
+					else if (game.getCardValue(hand.getCard(i)) < game.getCardValue(hand.getCard(lowestOverallCard)))
 					{
 						lowestOverallCard = i;
 					}
@@ -88,7 +88,7 @@ public class FiveHundredAIPlayer extends Player
 			// Select which card to play
 			if (!sameSuitCards.isEmpty())
 			{
-				if (hand.getCard(sameSuitCards.get(sameSuitCards.size() - 1)).getValue() > firstCardPlayed.getValue())
+				if (game.getCardValue(hand.getCard(sameSuitCards.get(sameSuitCards.size() - 1))) > game.getCardValue(firstCardPlayed))
 				{
 					cardToPlayIndex = sameSuitCards.get(sameSuitCards.size() - 1);
 				}
@@ -101,9 +101,7 @@ public class FiveHundredAIPlayer extends Player
 			{
 				if (!trumpSuitCards.isEmpty())
 				{
-					// TODO : Check if trumpCard will win, otherwise play lowestCard
-					// else if (hand.getCard(trumpSuitCards.get(trumpSuitCards.size()-1)).getValue()
-					// > firstCardPlayed.getValue()) {
+					// TODO : Choose whether playing the highest or lowest trump.
 					cardToPlayIndex = trumpSuitCards.get(trumpSuitCards.size() - 1);
 				}
 				else

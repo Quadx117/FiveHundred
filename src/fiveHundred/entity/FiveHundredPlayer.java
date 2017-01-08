@@ -58,22 +58,23 @@ public class FiveHundredPlayer extends Player
 			// hand since it is completely visible.
 			if (i == hand.getCardCount() - 1)
 			{
-				if (Mouse.getX() > hand.getCard(i).getX()
-						&& Mouse.getX() < hand.getCard(i).getX() + hand.getCard(i).getSprite().getWidth()
-						&& Mouse.getY() > hand.getCard(i).getY()
-						&& Mouse.getY() < hand.getCard(i).getY() + hand.getCard(i).getSprite().getHeight())
+				if (Mouse.getX() > hand.getCard(i).getX() &&
+					Mouse.getX() < hand.getCard(i).getX() + hand.getCard(i).getSprite().getWidth() &&
+					Mouse.getY() > hand.getCard(i).getY() &&
+					Mouse.getY() < hand.getCard(i).getY() + hand.getCard(i).getSprite().getHeight())
 				{
 					selectedCardIndex = i;
 					break;
 				}
-				// For all the other cards, the selection area is smaller since
-				// they are partially covered by the card to their right
 			}
+			// For all the other cards, the selection area is smaller since
+			// they are partially covered by the card to their right
 			else
 			{
-				if (Mouse.getX() > hand.getCard(i).getX() && Mouse.getX() < hand.getCard(i).getX() + Card.cardSpacing
-						&& Mouse.getY() > hand.getCard(i).getY()
-						&& Mouse.getY() < hand.getCard(i).getY() + hand.getCard(i).getSprite().getHeight())
+				if (Mouse.getX() > hand.getCard(i).getX() &&
+					Mouse.getX() < hand.getCard(i).getX() + Card.cardSpacing &&
+					Mouse.getY() > hand.getCard(i).getY() &&
+					Mouse.getY() < hand.getCard(i).getY() + hand.getCard(i).getSprite().getHeight())
 				{
 					selectedCardIndex = i;
 					break;
@@ -111,7 +112,7 @@ public class FiveHundredPlayer extends Player
 
 			for (int i = 0; i < hand.getCardCount(); ++i)
 			{
-				if (hand.getCard(i).getSuit() == firstCardPlayed.getSuit())
+				if (game.getCardSuit(hand.getCard(i)) == game.getCardSuit(firstCardPlayed))
 				{
 					hasSameSuitCards = true;
 					break;
@@ -124,7 +125,7 @@ public class FiveHundredPlayer extends Player
 			}
 			else
 			{
-				if ((card.getSuit() == Card.JOKER) || (card.getSuit() == firstCardPlayed.getSuit()))
+				if ((game.getCardSuit(card) == Card.JOKER) || (game.getCardSuit(card) == game.getCardSuit(firstCardPlayed)))
 				{
 					cardIsValid = true;
 				}

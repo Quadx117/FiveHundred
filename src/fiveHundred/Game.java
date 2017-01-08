@@ -3,9 +3,9 @@ package fiveHundred;
 import fiveHundred.cards.Card;
 import fiveHundred.cards.Deck;
 import fiveHundred.cards.Hand;
-import fiveHundred.entity.GameTable;
-import fiveHundred.entity.FiveHundredPlayer;
 import fiveHundred.entity.FiveHundredAIPlayer;
+import fiveHundred.entity.FiveHundredPlayer;
+import fiveHundred.entity.GameTable;
 import fiveHundred.entity.Player;
 import fiveHundred.rules.Bid;
 import fiveHundred.rules.FiveHundredRules;
@@ -30,7 +30,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import javax.swing.UIManager;
 
 /** This class contains the main methods of our game */
 public class Game extends GameCore
@@ -203,8 +202,7 @@ public class Game extends GameCore
 				deck.shuffle();
 				// Deal cards to the players and the widow
 				dealCards();
-				// Set the initial positions of each player's cards for
-				// rendering
+				// Set the initial positions of each player's cards for rendering
 				setPositions();
 				// Set the first player to bid.
 				currentPlayer = (dealerIndex + 1) % playersList.size();
@@ -217,6 +215,11 @@ public class Game extends GameCore
 				updateBidding();
 				break;
 			case PLAYING:
+				// Only set the cards position in the hand once.
+				if (numCardsPlayed == 0)
+				{
+					setPositions();
+				}
 				playCards();
 				checkRules();
 				break;
@@ -256,26 +259,96 @@ public class Game extends GameCore
 			playersList.get(currentPlayer).setYourTurn(true);
 		}
 
-		// If all three player called their bid, adjust the cards values to the
-		// trump if needed and play.
+		// If all three player called their bid, start playing.
 		if (bidCount == 3)
 		{
-			adjustCardValues();
 			currentPlayer = highestBidder;
 			currentGameState = GameState.PLAYING;
 		}
 	}
 
-	/**
-	 * Adjust each player's card values with the trump of the bid if needed.
-	 */
-	private void adjustCardValues()
-	{
-		if (highestBid.hasTrump())
-		{
-			// TODO : actual code to adjust card value.
+	/// <summary>
+    /// Calculate the value of a FiveHundred card.
+    /// </summary>
+    /// <param name="card">The card to calculate the value for.</param>
+    /// <returns>The card's value. All card values are equal to their face number.
+    /// Queen = 12, King = 13 and Ace = 14. Jack = 11 when there is no trump.
+    /// Otherwise, the left bower (Jack of the same suit as the trump) is 16 and the
+    /// right bower (Jack of the same color as the trumo) is 15.  The Joker is always
+    /// the highest card, so we give him a value of 20</returns>
+    /// <remarks>An ace's value will be 1. Game logic will treat it as 11 where
+    /// appropriate.</remarks>
+    public int getCardValue(Card card)
+    {
+        switch(card.getValue())
+        {
+            case Card.JACK:
+            	if (highestBid.hasTrump())
+            	{
+            		if (card.getSuit() == highestBid.getLeftBower())
+            			return 16;
+            		else if (card.getSuit() == highestBid.getRightBower())
+            			return 15;
+            		else
+            			return 11;
+            			
+            	}
+            	else
+            	{
+            		return 11;
+            	}
+            default:
+                return card.getValue();
 		}
-	}
+    }
+
+    public int getCardSuit(Card card)
+    {
+    	if (highestBid.hasTrump() &&
+    		card.getValue() == Card.JACK &&
+    		card.getSuit() == highestBid.getRightBower())
+    	{
+    		return highestBid.getLeftBower();
+    	}
+    	else if (highestBid.hasTrump() &&
+        		card.getSuit() == Card.JOKER)
+        {
+        	return highestBid.getLeftBower();
+        }
+    	else
+    	{
+	        switch (card.getSuit())
+	        {
+	            case Card.CLUBS:
+	            case Card.DIAMONDS:
+	            case Card.SPADES:
+	            case Card.HEARTS:
+	            case Card.JOKER:
+	                return card.getSuit();
+	            default:
+	                throw new IllegalArgumentException("Ambigous card suit");
+	        }
+    	}
+    }
+
+    /**
+     * Helper method used by the SortHand method in CardPacket.
+     * 
+     * <p>
+     * This method compares to card based on their suit first and then their value
+     * and returns whether or not the first card comes before the second card.
+     * 
+     * @param card1
+     *        First card to compare.
+     * @param card2
+     *        Second card to compare
+     * @return {@code true} if the first card should be before the second one, {@code false} otherwise
+     */
+    private boolean cardComparator(Card card1, Card card2)
+    {
+        return (getCardSuit(card1) < getCardSuit(card2) ||
+                (getCardSuit(card1) == getCardSuit(card2) && getCardValue(card1) < getCardValue(card2)));
+    }
 
 	private void playCards()
 	{
@@ -310,7 +383,7 @@ public class Game extends GameCore
 		if (gameTable.getCardsOnTable().size() != 3 || firstCardPlayed == -1)
 			return;
 
-		int trickWinner = FiveHundredRules.trickWinner(gameTable.getCardsOnTable(), firstCardPlayed);
+		int trickWinner = FiveHundredRules.trickWinner(gameTable.getCardsOnTable(), firstCardPlayed, this);
 		playersList.get(trickWinner).addTrick();
 		gameTable.trickWinner = trickWinner;
 		currentPlayer = trickWinner;
@@ -436,12 +509,12 @@ public class Game extends GameCore
 			playersList.get(1).getHand().getCard(i).setX(50);
 			playersList.get(2).getHand().getCard(i).setX(getScreenWidth() - 130);
 		}
-		playersList.get(0).getHand().sortBySuit();
+		playersList.get(0).getHand().sort(this::cardComparator);
 		playersList.get(0).getHand().updateXPosition(this);
 
 		// TODO: Delete when finished debugging
-		playersList.get(1).getHand().sortBySuit();
-		playersList.get(2).getHand().sortBySuit();
+		playersList.get(1).getHand().sort(this::cardComparator);
+		playersList.get(2).getHand().sort(this::cardComparator);
 
 		playersList.get(1).getHand().updateYPosition(this);
 		playersList.get(2).getHand().updateYPosition(this);
@@ -571,6 +644,11 @@ public class Game extends GameCore
 				OK.setVisible(false);
 			}
 		});
+	}
+
+	public int getNumblerOfPlayers()
+	{
+		return playersList.size();
 	}
 
 	public GameTable getGameTable()
